@@ -1,0 +1,89 @@
+<div *ngIf="newDiv">
+  <form #addBranchForm="ngForm" (ngSubmit)="addBranch(addBranchForm)" required>
+    <div class="flex flex-wrap gap-3 mb-3">
+      <div class="flex-auto">
+          <label for="alphabetic" class=" block mb-2"> Branch Code </label>
+          <input pInputText pKeyFilter="alpha" id="alphabetic" ngModel name="code" [style]="{'width':'630px','height':'45px'}"  required minlength="3"/>
+      </div>
+      <div class="flex-auto">
+        <label for="alphabetic" class=" block mb-2"> Branch Name </label>
+        <input pInputText pKeyFilter="alpha" id="alphabetic" ngModel name="name" [style]="{'width':'630px','height':'45px'}"  required minlength="3"/>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-3 mb-3">
+      <div class="flex-auto">
+        <label for="alphabetic" class=" block mb-2"> Mnemonic </label>
+        <input pInputText pKeyFilter="alpha" id="alphabetic" ngModel name="mnemonic" [style]="{'width':'630px','height':'45px'}"  required minlength="3"/>
+      </div>
+      <div class="flex-auto">
+        <label for="alphabetic" class=" block mb-2"> Location </label>
+        <input pInputText pKeyFilter="alpha" id="alphabetic" ngModel name="location" [style]="{'width':'630px','height':'45px'}"  required minlength="3"/>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-3 mb-5">
+      <div class="flex-auto">
+            <label for="hex" class=" block mb-2"> District </label>
+              <p-dropdown [options]="districts" name="district" [(ngModel)]="selectedDistrict" optionLabel="name" [filter]="true"  filterBy="name" [showClear]="true" placeholder="Select District"
+              class="w-full" styleClass="p-password" [style]="{'width':'630px','height':'45px'}"  [required]="true">
+              <ng-template pTemplate="selectedItem">
+                <div class="flex align-items-center gap-2" *ngIf="selectedDistrict">
+                    <div>{{ selectedDistrict.name }}</div>
+                </div>
+            </ng-template>
+                  <ng-template let-district pTemplate="item">
+                      <div class="flex align-items-center gap-2">
+                          <div>{{ district.name }}</div>
+                      </div>
+                  </ng-template>
+              </p-dropdown>
+        </div>
+    </div>
+    <p-button label="Create Branch"  type="submit" [disabled]="addBranchForm.invalid" class="createButton"></p-button>
+  </form>
+</div>
+
+
+<div *ngIf="update">
+  <form  #updateBranchForm="ngForm" (ngSubmit)="updateBranch(updateBranchForm)">
+    <input type="hidden" name="id" ngModel [(ngModel)]="idY">
+    <div class="flex flex-wrap gap-3 mb-3">
+      <div class="flex-auto">
+          <label for="alphabetic" class=" block mb-2"> Branch Code </label>
+          <input pInputText id="alphabetic" pKeyFilter="alpha"  ngModel [(ngModel)]="branch.code" name="code" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+      </div>
+      <div class="flex-auto">
+        <label for="alphabetic" class=" block mb-2"> Branch Name </label>
+        <input pInputText id="alphabetic" pKeyFilter="alpha"  ngModel [(ngModel)]="branch.name" name="name" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-3 mb-3">
+      <div class="flex-auto">
+          <label for="alphabetic" class=" block mb-2"> Mnemonic </label>
+          <input pInputText id="alphabetic" pKeyFilter="alpha"  ngModel [(ngModel)]="branch.mnemonic" name="mnemonic" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+      </div>
+      <div class="flex-auto">
+        <label for="alphabetic" class=" block mb-2"> Location </label>
+        <input pInputText id="alphabetic" pKeyFilter="alpha"  ngModel [(ngModel)]="branch.location" name="location" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-3 mb-3">
+        <div class="flex-auto">
+            <label for="hex" class=" block mb-2"> District </label>
+              <p-dropdown [options]="districts" name="district" ngModel [(ngModel)]="selectedDistrict" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select District"
+              class="w-full" styleClass="p-password" [style]="{'width':'630px','height':'45px'}">
+              <ng-template pTemplate="selectedItem">
+                <div class="flex align-items-center gap-2" *ngIf="selectedDistrict">
+                    <div>{{ selectedDistrict.name}}</div>
+                </div>
+            </ng-template>
+                  <ng-template let-districtd pTemplate="item">
+                      <div class="flex align-items-center gap-2">
+                          <div>{{ districtd.name }} </div>
+                      </div>
+                  </ng-template>
+              </p-dropdown>
+        </div>
+    </div>
+    <p-button label="Update Branch"  type="submit" [disabled]="updateBranchForm.invalid" class="createButton"></p-button>
+  </form>
+</div>

@@ -1,0 +1,135 @@
+<div *ngIf="newDiv">
+<form #addEmplForm="ngForm" (ngSubmit)="addEmplloyee(addEmplForm)">
+
+  <div class="flex flex-wrap gap-2 mb-3">
+    <div class="flex-auto">
+        <label for="alphabetic" class=" block mb-2"> First Name: </label>
+        <input pInputText id="alphabetic" pKeyFilter="alpha"  ngModel name="givenName" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+    </div>
+    <div class="flex-auto">
+      <label for="alphabetic" class=" block mb-2"> Father Name: </label>
+      <input pInputText id="alphabetic" pKeyFilter="alpha"  ngModel name="fatherName" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-2 mb-3">
+    <div class="flex-auto">
+        <label for="alphabetic" class=" block mb-2"> Grand Father Name: </label>
+        <input pInputText id="alphabetic" pKeyFilter="alpha"  ngModel name="grandFatherName" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+    </div>
+    <div class="flex-auto">
+      <label for="hex" class=" block mb-2"> Gender: </label>
+        <p-dropdown [options]="genders" name="gender" optionLabel="name" optionValue="name" [filter]="true" ngModel [(ngModel)]="selectedGender" filterBy="gender" [showClear]="true" placeholder="Select Gender"
+        styleClass="p-password" [style]="{'width':'630px','height':'45px'}"  [required]="true">
+        <ng-template pTemplate="selectedItem">
+          <div class="flex align-items-center gap-2" *ngIf="selectedGender">
+              <div>{{ selectedGender }}</div>
+          </div>
+      </ng-template>
+            <ng-template let-gender pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                    <div>{{gender.name}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+  </div>
+  </div>
+
+
+  <div class="flex flex-wrap gap-2 mb-3">
+    <div class="flex-auto">
+      <label for="alphanumeric" class=" block mb-2"> CBO Email: </label>
+      <input pInputText id="alphanumeric" pKeyFilter="alphanum"  ngModel name="cboEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" [style]="{'width':'630px','height':'45px'}"  required minlength="10" />
+    </div>
+    <div class="flex-auto">
+      <label for="alphabetic" class=" block mb-2"> Position: </label>
+      <input pInputText id="alphabetic" pKeyFilter="alpha"  ngModel name="position" [style]="{'width':'630px','height':'45px'}"  required minlength="2" />
+    </div>
+  </div>
+
+    <div class="flex flex-wrap gap-2 mb-3">
+      <div class="flex-auto">
+          <label for="hex" class=" block mb-2"> Division: </label>
+            <p-dropdown [options]="divisions" name="division" optionLabel="name" [filter]="true" ngModel [(ngModel)]="selectedDivision" filterBy="name" [showClear]="true" placeholder="Select division"
+            styleClass="p-password" [style]="{'width':'630px','height':'45px'}"  [required]="true">
+            <ng-template pTemplate="selectedItem">
+              <div class="flex align-items-center gap-2" *ngIf="selectedDivision">
+                  <div>{{ selectedDivision.name}}</div>
+              </div>
+          </ng-template>
+                <ng-template let-division pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                        <div>{{division.name}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+      </div>
+      <div class="flex-auto">
+        <label for="number" class=" block mb-2"> Phone number: </label>
+        <input pInputText id="number" pKeyFilter="num"  ngModel name="phoneNumber" [style]="{'width':'630px','height':'45px'}"  required minlength="10" />
+      </div>
+  </div>
+
+
+  <div class="flex flex-wrap gap-2 mb-5">
+    <div class="flex-auto">
+        <label for="number" class=" block mb-2"> Date of birth: </label>
+        <p-calendar [(ngModel)]="date" id="number" pKeyFilter="num" ngModel name="birthDate" [maxDate]="maxDate" [showIcon]="true" [style]="{'width':'630px','height':'45px'}" [required]="true"></p-calendar>
+    </div>
+  </div>
+    <p-button label="Create employee" type="submit" [disabled]="addEmplForm.invalid"></p-button>
+  </form>
+</div>
+
+
+<div *ngIf="update">
+  <form #updateEmplForm="ngForm" (ngSubmit)="updateEmployee(updateEmplForm)">
+    <input type="hidden" name="id" ngModel [(ngModel)]="idY">
+    <div class="flex flex-wrap gap-2 mb-3">
+      <div class="flex-auto">
+          <label for="alphabetic" class=" block mb-2"> First Name: </label>
+          <input pInputText id="alphabetic" pKeyFilter="alpha"  ngModel [(ngModel)]="employee.givenName" name="givenName" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+      </div>
+      <div class="flex-auto">
+        <label for="alphabetic" class=" block mb-2"> Father Name: </label>
+        <input pInputText id="alphabetic" pKeyFilter="alpha"  ngModel [(ngModel)]="employee.fatherName" name="fatherName" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-2 mb-3">
+      <div class="flex-auto">
+          <label for="alphabetic" class=" block mb-2"> Grand Father Name: </label>
+          <input pInputText id="alphabetic" pKeyFilter="alpha"  ngModel [(ngModel)]="employee.grandFatherName" name="grandFatherName" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+      </div>
+      <div class="flex-auto">
+        <label for="alphabetic" class=" block mb-2"> Position: </label>
+        <input pInputText id="alphabetic" pKeyFilter="alpha"  ngModel [(ngModel)]="employee.position" name="position" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-2 mb-3">
+      <div class="flex-auto">
+        <label for="hex" class=" block mb-2"> Division: </label>
+        <p-dropdown [options]="divisions" name="division" ngModel [(ngModel)]="selectedDivision" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select Division"
+        class="w-full" styleClass="p-password" [style]="{'width':'630px','height':'45px'}" [required]="true">
+        <ng-template pTemplate="selectedItem">
+          <div class="flex align-items-center gap-2" *ngIf="selectedDivision">
+              <div>{{ selectedDivision.name}}</div>
+          </div>
+        </ng-template>
+            <ng-template let-division pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                    <div>{{division.name}}</div>
+                </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div class="flex-auto">
+        <label for="number" class=" block mb-2"> Phone Number: </label>
+        <input pInputText id="number" pKeyFilter="num"  ngModel [(ngModel)]="employee.phoneNumber" name="phoneNumber" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+      </div>
+    </div>
+        <p-button label="Update employee" type="submit" [disabled]="updateEmplForm.invalid" class="createButton"></p-button>
+   </form>
+
+  </div>

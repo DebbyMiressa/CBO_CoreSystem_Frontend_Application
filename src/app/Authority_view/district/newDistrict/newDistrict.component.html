@@ -1,0 +1,27 @@
+<div *ngIf="newDiv">
+  <form #addDistrictForm="ngForm" (ngSubmit)="addDistrict(addDistrictForm)" required>
+    <div class="flex flex-wrap gap-3 mb-3">
+
+      <div class="flex-auto">
+        <label for="alphabetic" class=" block mb-2"> District Name </label>
+        <input pInputText pKeyFilter="alpha" id="alphabetic" ngModel name="name" [style]="{'width':'630px','height':'45px'}"  required minlength="3"/>
+      </div>
+    </div>
+    <p-button label="Create District"  type="submit" [disabled]="addDistrictForm.invalid" class="createButton"></p-button>
+  </form>
+</div>
+
+
+<div *ngIf="update">
+  <form  #updateDistrictForm="ngForm" (ngSubmit)="updateDistrict(updateDistrictForm)">
+    <input type="hidden" name="id" ngModel [(ngModel)]="idY">
+    <div class="flex flex-wrap gap-3 mb-3">
+
+      <div class="flex-auto">
+        <label for="alphabetic" class=" block mb-2"> District Name </label>
+        <input pInputText id="alphabetic" pKeyFilter="alpha"  ngModel [(ngModel)]="district.name" name="name" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+      </div>
+    </div>
+    <p-button label="Update District"  type="submit" [disabled]="updateDistrictForm.invalid" class="updateButton"></p-button>
+  </form>
+</div>

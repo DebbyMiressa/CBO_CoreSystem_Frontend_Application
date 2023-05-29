@@ -1,0 +1,61 @@
+<div *ngIf="newDiv">
+  <form #addDivForm="ngForm" (ngSubmit)="addDivision(addDivForm)">
+   <div class="flex flex-wrap gap-2 mb-2">
+    <div class="flex-auto">
+        <label for="integer" class=" block mb-2"> Division Name: </label>
+        <input pInputText id="integer" pKeyFilter="int"  ngModel name="name" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-2 mb-6">
+    <div class="flex-auto">
+      <label for="hex" class=" block mb-2"> Parent: </label>
+        <p-dropdown [options]="divisions" name="parent" optionLabel="name" [filter]="true" ngModel [(ngModel)]="selectedDivision" filterBy="name" [showClear]="true" placeholder="Choose Parent Division"
+        styleClass="p-password" [style]="{'width':'630px','height':'45px'}"  >
+        <ng-template pTemplate="selectedItem">
+          <div class="flex align-items-center gap-2" *ngIf="selectedDivision">
+              <div>{{ selectedDivision.name}}</div>
+          </div>
+      </ng-template>
+            <ng-template let-division pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                    <div>{{division.name}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+  </div>
+  </div>
+       <p-button label="Create Division" [disabled]="addDivForm.invalid" type="submit"></p-button>
+  </form>
+
+</div>
+
+<div *ngIf="update">
+    <form #updateDivForm="ngForm" (ngSubmit)="updateDiivision(updateDivForm)">
+      <input type="hidden" name="id" ngModel [(ngModel)]="idY">
+
+      <div class="flex flex-wrap gap-2 mb-2">
+        <div class="flex-auto">
+            <label for="integer" class=" block mb-2"> Division Name: </label>
+            <input pInputText id="integer" pKeyFilter="int"  ngModel [(ngModel)]="division.name" name="name" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+          </div>
+        <div class="flex-auto">
+          <label for="hex" class=" block mb-2"> Parent: </label>
+            <p-dropdown [options]="divisions" name="parent" optionLabel="name" [filter]="true" ngModel [(ngModel)]="selectedDivision.parent" filterBy="name" [showClear]="true" placeholder="Choose parent division"
+            class="w-full" styleClass="p-password" [style]="{'width':'630px','height':'45px'}"  [required]="true">
+            <ng-template pTemplate="selectedItem">
+              <div class="flex align-items-center gap-2" *ngIf="selectedDivision.parent">
+                  <div>{{ selectedDivision.parent.name}}</div>
+              </div>
+          </ng-template>
+                <ng-template let-division pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                        <div>{{division.name}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+      </div>
+      </div>
+         <p-button label="Update Division" [disabled]="updateDivForm.invalid" type="submit"></p-button>
+    </form>
+</div>

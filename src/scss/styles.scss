@@ -1,0 +1,21 @@
+@import "variables";
+
+$enable-ltr: true;
+$enable-rtl: true;
+
+@import "@coreui/coreui/scss/coreui";
+
+@import "@coreui/chartjs/scss/coreui-chartjs";
+
+
+//@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+@import "layout";
+
+// Some temp fixes
+@import "fixes";
+
+// Prism.js
+@import "examples";
+
+
