@@ -58,32 +58,20 @@ export class AuthService {
 
   // After login save token and other values(if any) in localStorage
   setUser(resp: JwtResponce) {
-    if (resp?.user?.roles[0]?.name == "ROLE_SUPER_ADMIN") {
-      this.router.navigate(['/superadmin']);
-    }
-    else if (resp?.user?.roles[0]?.name == "ROLE_IC_ADMIN") {
-      this.router.navigate(['/adminic']);
-    }
-    else if (resp?.user?.roles[0]?.name == "ROLE_SASV_ADMIN") {
-      this.router.navigate(['/adminsasv']);
-    }
-    else if (resp?.user?.roles[0]?.name == "ROLE_SASV_VIEW") {
-      this.router.navigate(['/viewsasv']);
-    }
-    else if (resp?.user?.roles[0]?.name == "ROLE_SANCTION_ADMIN") {
-      this.router.navigate(['/adminsanction']);
-    }
-    else if (resp?.user?.roles[0]?.name == "ROLE_SANCTION_VIEW") {
-      this.router.navigate(['/viewsanction']);
-    }
-    else if (resp?.user?.roles[0]?.name == "ROLE_BRANCH_IC") {
-      this.router.navigate(['/branchic']);
-    }
-    else if (resp?.user?.roles[0]?.name == "ROLE_BRANCH_MANAGER") {
-      this.router.navigate(['/bm']);
-    }
-    else if (resp?.user?.roles[0]?.name == "ROLE_DISTRICT_IC") {
-      this.router.navigate(['/districtic']);
+    const role = resp?.user?.roles[0]?.name;
+
+    if (role == "ROLE_SUPER_ADMIN" ||
+        role == "ROLE_IC_ADMIN" ||
+        role =="ROLE_SASV_ADMIN" ||
+        role =="ROLE_SASV_VIEW" ||
+        role =="ROLE_SANCTION_ADMIN" ||
+        role =="ROLE_SANCTION_VIEW" ||
+        role =="ROLE_BRANCH_IC" ||
+        role =="ROLE_BRANCH_MANAGER" ||
+        role =="ROLE_DISTRICT_IC"
+        ) {
+
+      this.router.navigate(['/dashboard']);
     }
 
     localStorage.clear();

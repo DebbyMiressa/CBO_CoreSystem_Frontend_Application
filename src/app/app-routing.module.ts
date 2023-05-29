@@ -3,15 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { DefaultLayoutComponent } from './containers';
 import { LoginComponent } from './login/login.component';
 import { UserLoginComponent } from './User/userLogin.component';
-import { NewDivisonComponent } from './Authority_view/division/newDivision/newDivision.component';
-import { NewEmployeeComponent } from './Authority_view/employee/newEmployee/newEmployee.component';
-import { NewUserComponent } from './Authority_view/user/newUser/newUser.component';
+import { NewDivisonComponent } from './modules/cas/division/newDivision/newDivision.component';
+import { NewEmployeeComponent } from './modules/cas/employee/newEmployee/newEmployee.component';
+import { NewUserComponent } from './modules/cas/user/newUser/newUser.component';
 import { AuthGuard} from './_guards/auth.guard';
-import { NewBranchComponent } from './Authority_view/branch/newBranch/newBranch.component';
-import { NewDistrictComponent } from './Authority_view/district/newDistrict/newDistrict.component';
-import { NewCIPMComponent } from './operations/cipm/newCIPM/newCIPM.component';
-import { NewDchequeComponent } from './operations/dcheque/newDcheque/newDcheque.component';
-import { NewFraudComponent } from './operations/fraud/newFraud/newFraud.component';
+import { NewBranchComponent } from './modules/cas/branch/newBranch/newBranch.component';
+import { NewDistrictComponent } from './modules/cas/district/newDistrict/newDistrict.component';
+import { NewCIPMComponent } from './modules/ic/cipm/newCIPM/newCIPM.component';
+import { NewDchequeComponent } from './modules/ic/dcheque/newDcheque/newDcheque.component';
+import { NewFraudComponent } from './modules/ic/fraud/newFraud/newFraud.component';
 
 const routes: Routes = [
   {
@@ -21,25 +21,7 @@ const routes: Routes = [
     path: 'login', component: LoginComponent
   },
   {
-    path: 'adminic', redirectTo: 'dashboard', pathMatch: 'full'
-  },
-  {
-    path: 'branchic', redirectTo: 'dashboard', pathMatch: 'full'
-  },
-  {
-    path: 'districtic', redirectTo: 'dashboard', pathMatch: 'full'
-  },
-  {
-    path: 'superadmin', redirectTo: 'dashboard', pathMatch: 'full'
-  },
-  {
-    path: 'bm', redirectTo: 'dashboard', pathMatch: 'full'
-  },
-  {
-    path: 'adminsasv', redirectTo: 'dashboard', pathMatch: 'full'
-  },
-  {
-    path: 'adminsanction', redirectTo: 'dashboard', pathMatch: 'full'
+    path: 'dashboard', redirectTo: 'dashboard', pathMatch: 'full'
   },
   {
     path:'userPage',redirectTo: 'userPage', pathMatch: 'full'
@@ -65,7 +47,7 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () =>
-          import('./Authority_view/dashboard/dashboard.module').then((m) => m.DashboardModule)
+          import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
       {
         path:'userPage',component: UserLoginComponent, canActivate: [AuthGuard],
@@ -105,57 +87,62 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () =>
-          import('./Authority_view/dashboard/dashboard.module').then((m) => m.DashboardModule)
+          import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
       {
         path: 'user',
         loadChildren: () =>
-          import('./Authority_view/user/user.module').then((m) => m.UserModule)
+          import('./modules/cas/user/user.module').then((m) => m.UserModule)
       },
       {
         path: 'IC/user',
         loadChildren: () =>
-          import('./Authority_view/user/user.module').then((m) => m.UserModule)
+          import('./modules/cas/user/user.module').then((m) => m.UserModule)
       },
       {
         path: 'employee',
         loadChildren: () =>
-          import('./Authority_view/employee/employee.module').then((m) => m.EmployeeModule)
+          import('./modules/cas/employee/employee.module').then((m) => m.EmployeeModule)
       },
       {
         path: 'division',
         loadChildren: () =>
-          import('./Authority_view/division/division.module').then((m) => m.DivisionModule)
+          import('./modules/cas/division/division.module').then((m) => m.DivisionModule)
       },
       {
         path: 'authority',
         loadChildren: () =>
-          import('./Authority_view/authority/authority.module').then((m) => m.AuthorityModule)
+          import('./modules/sasv/authority/authority.module').then((m) => m.AuthorityModule)
       },
       {
         path: 'branch',
         loadChildren: () =>
-          import('./Authority_view/branch/branch.module').then((m) => m.BranchModule)
+          import('./modules/cas/branch/branch.module').then((m) => m.BranchModule)
       },
       {
         path: 'district',
         loadChildren: () =>
-          import('./Authority_view/district/district.module').then((m) => m.DistrictModule)
+          import('./modules/cas/district/district.module').then((m) => m.DistrictModule)
       },
       {
         path: 'IC/CIPM',
         loadChildren: () =>
-          import('./operations/cipm/cipm.module').then((m) => m.CIPMModule)
+          import('./modules/ic/cipm/cipm.module').then((m) => m.CIPMModule)
+      },
+      {
+        path: 'Sanction',
+        loadChildren: () =>
+          import('./modules/sl/sanction.module').then((m) => m.SanctionModule)
       },
       {
         path: 'IC/Dcheque',
         loadChildren: () =>
-          import('./operations/dcheque/dcheque.module').then((m) => m.DchequeModule)
+          import('./modules/ic/dcheque/dcheque.module').then((m) => m.DchequeModule)
       },
       {
         path: 'IC/Fraud',
         loadChildren: () =>
-          import('./operations/fraud/fraud.module').then((m) => m.FraudModule)
+          import('./modules/ic/fraud/fraud.module').then((m) => m.FraudModule)
       },
       {
         path: 'userLogin',
