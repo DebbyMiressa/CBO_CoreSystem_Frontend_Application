@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DefaultLayoutComponent } from './containers';
 import { LoginComponent } from './login/login.component';
-import { UserLoginComponent } from './User/userLogin.component';
 import { NewDivisonComponent } from './modules/cas/division/newDivision/newDivision.component';
 import { NewEmployeeComponent } from './modules/cas/employee/newEmployee/newEmployee.component';
 import { NewUserComponent } from './modules/cas/user/newUser/newUser.component';
@@ -12,7 +11,9 @@ import { NewDistrictComponent } from './modules/cas/district/newDistrict/newDist
 import { NewCIPMComponent } from './modules/ic/cipm/newCIPM/newCIPM.component';
 import { NewDchequeComponent } from './modules/ic/dcheque/newDcheque/newDcheque.component';
 import { NewFraudComponent } from './modules/ic/fraud/newFraud/newFraud.component';
-
+import { sasvViewerLoginComponent } from './modules/sasv/sasvViewer/sasvViewerLogin.component';
+import { LetterComponent } from './modules/sasv/memo/letter/letter.component';
+import { MemoComponent } from './modules/sasv/memo/memo.component';
 const routes: Routes = [
   {
     path: '', redirectTo: 'login', pathMatch: 'full'
@@ -47,10 +48,10 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () =>
-          import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule)
+          import('./modules/cas/dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
       {
-        path:'userPage',component: UserLoginComponent, canActivate: [AuthGuard],
+        path:'sasvPage',component: sasvViewerLoginComponent, canActivate: [AuthGuard],
       },
     ]
   },
@@ -87,7 +88,7 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () =>
-          import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule)
+          import('./modules/cas/dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
       {
         path: 'user',
@@ -145,9 +146,15 @@ const routes: Routes = [
           import('./modules/ic/fraud/fraud.module').then((m) => m.FraudModule)
       },
       {
-        path: 'userLogin',
+        path: 'sasvViewerLogin',
         loadChildren: () =>
-          import('./User/userLogin.module').then((m) => m.UserLoginModule)
+          import('./modules/sasv/sasvViewer/sasvViewerLogin.module').then((m) => m.sasvViewerLoginModule)
+      },
+      {
+        path:'letter', component: LetterComponent, canActivate: [AuthGuard],
+      },
+      {
+        path: 'director', component: MemoComponent, canActivate: [AuthGuard],
       },
     ]
   },

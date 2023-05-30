@@ -74,7 +74,6 @@ import { ShowComponent } from './show/show.component';
     NewAuthorityComponent,
     AuthorityTableComponent,
     ShowComponent
-
   ],
 })
 export class AuthorityModule {}

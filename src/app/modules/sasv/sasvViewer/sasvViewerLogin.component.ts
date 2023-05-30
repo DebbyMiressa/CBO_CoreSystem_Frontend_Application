@@ -3,17 +3,17 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClassToggleService, FooterComponent } from '@coreui/angular';
 import { HeaderComponent } from '@coreui/angular';
-import { Authority } from '../models/authority';
-import { AuthorityC } from '../models/authorityC';
-import { AuthorityService } from '../services/authority.service';
+import { Authority } from '../../../models/authority';
+import { AuthorityC } from '../../../models/authorityC';
+import { AuthorityService } from '../../../services/authority.service';
 import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-accordions',
-  templateUrl: './userLogin.component.html',
-  styleUrls: ['./userLogin.component.scss']
+  templateUrl: './sasvViewerLogin.component.html',
+  styleUrls: ['./sasvViewerLogin.component.scss']
 })
-export class UserLoginComponent extends HeaderComponent{
+export class sasvViewerLoginComponent extends HeaderComponent{
 
   public authorityR: Authority[] = [];
   public authorities: Authority[] = [];

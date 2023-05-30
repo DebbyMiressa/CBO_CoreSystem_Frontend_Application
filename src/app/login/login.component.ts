@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component,OnInit } from '@angular/core';
-import { JwtResponce } from '../models/JwtResponce';
+import { JwtResponse } from '../models/JwtResponse';
 import { AuthService } from '../_services/auth.service';
 
 @Component({
@@ -18,9 +18,9 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-
+    this.model.action = 'login';
     this.authService.loginForm(this.model).subscribe(
-      (response: JwtResponce) => {
+      (response: JwtResponse) => {
         this.authService.setUser(response);
         console.log(response);
       },

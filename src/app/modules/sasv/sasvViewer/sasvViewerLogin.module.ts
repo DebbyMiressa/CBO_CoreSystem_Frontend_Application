@@ -5,7 +5,7 @@ import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {TableModule} from 'primeng/table';
 import { AvatarModule, BreadcrumbModule, DropdownModule, FooterModule, FormModule, HeaderModule, NavModule, SidebarModule } from '@coreui/angular';
-import { UserLoginComponent } from './userLogin.component';
+import { sasvViewerLoginComponent } from './sasvViewerLogin.component';
 import { IconModule } from '@coreui/icons-angular';
 import { GridModule } from '@coreui/angular';
 import {DialogModule} from 'primeng/dialog';
@@ -33,8 +33,8 @@ import {DialogModule} from 'primeng/dialog';
 
   ],
   declarations: [
-    UserLoginComponent
+    sasvViewerLoginComponent
   ],
-  
+
 })
-export class UserLoginModule {}
+export class sasvViewerLoginModule {}

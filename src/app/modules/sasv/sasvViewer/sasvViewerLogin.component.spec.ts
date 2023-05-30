@@ -2,17 +2,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { IconSetService } from '@coreui/icons-angular';
-import { iconSubset } from '../icons/icon-subset';
-import { UserLoginComponent } from './userLogin.component';
+import { iconSubset } from '../../../icons/icon-subset';
+import { sasvViewerLoginComponent } from './sasvViewerLogin.component';
 
 describe('TableComponent', () => {
-  let component: UserLoginComponent;
-  let fixture: ComponentFixture<UserLoginComponent>;
+  let component: sasvViewerLoginComponent;
+  let fixture: ComponentFixture<sasvViewerLoginComponent>;
   let iconSetService: IconSetService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UserLoginComponent],
+      declarations: [sasvViewerLoginComponent],
       imports: [  RouterTestingModule],
       providers: [IconSetService]
     })
@@ -23,7 +23,7 @@ describe('TableComponent', () => {
     iconSetService = TestBed.inject(IconSetService);
     iconSetService.icons = { ...iconSubset };
 
-    fixture = TestBed.createComponent(UserLoginComponent);
+    fixture = TestBed.createComponent(sasvViewerLoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

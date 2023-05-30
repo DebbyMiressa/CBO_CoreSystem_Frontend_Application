@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, retry, throwError } from 'rxjs';
-import { JwtResponce } from '../models/JwtResponce';
+import { JwtResponse } from '../models/JwtResponse';
 
 interface LoginResponse {
   access_token: string;
@@ -17,7 +17,7 @@ interface LoginResponse {
 export class AuthService {
 
   // API path
-  basePath = 'http://localhost:8083';
+  basePath = 'http://10.1.11.44:8083';
 
   constructor(
     private router: Router,
@@ -46,10 +46,10 @@ export class AuthService {
 
 
   // Verify user credentials on server to get token
-  loginForm(data: any): Observable<JwtResponce> {
+  loginForm(data: any): Observable<JwtResponse> {
     localStorage.clear();
     return this.http
-      .post<JwtResponce>(this.basePath + '/auth/login', data, this.httpOptions)
+      .post<JwtResponse>(this.basePath + '/auth/login', data, this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -57,7 +57,7 @@ export class AuthService {
   }
 
   // After login save token and other values(if any) in localStorage
-  setUser(resp: JwtResponce) {
+  setUser(resp: JwtResponse) {
     const role = resp?.user?.roles[0]?.name;
 
     if (role == "ROLE_SUPER_ADMIN" ||
@@ -92,7 +92,7 @@ export class AuthService {
     }
     for (let i = 1; i <= resp?.accessTokens.length; i++) {
       if (i == 1) {
-        localStorage.setItem('url_1', "http://10.1.11.44:8083");
+        localStorage.setItem('url_1', this.basePath);
       } else {
         for (let j = 0; j < resp?.user?.modules.length; j++) {
           if (j+2 == resp?.user?.modules[i-2].id) {

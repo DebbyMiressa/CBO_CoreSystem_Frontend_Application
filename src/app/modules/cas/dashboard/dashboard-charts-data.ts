@@ -1,5 +1,8 @@
-import { Injectable } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/utils/src';
+import { DashboardV } from 'src/app/models/dashboardv';
+import { AuthorityService } from 'src/app/services/authority.service';
 
 export interface IChartProps {
   data?: any;
@@ -16,17 +19,74 @@ export interface IChartProps {
   providedIn: 'any'
 })
 export class DashboardChartsData {
-  constructor() {
-    this.initMainChart();
+  constructor(private authService: AuthorityService) {
+    console.log(this.dashdata);
+    this.dashdata = {
+      newUsers: [50, 60, 8, 0, 9, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      allUsers: 0,
+      activeAuth: 0,
+      allAuth: 0,
+      recentUsers: [{ name: "Default", lastlogin: "10:10:10", role: "Default" }],
+      roleVisit: { admin: 0, director: 0, nuser: 0 },
+      todayLogin: 0,
+      pageViewToday: 0,
+      maleUsers: 0,
+      femaleUsers: 0,
+      allEmployee: 0,
+      allDivision: 0
+    };
+    this.dashdata.todayLogin = 9;
+    this.authService.getDashboardData().subscribe(
+      (response: DashboardV) => {
+        this.dashdata = response;
+        this.initMainChart();
+      }
+    ),
+      (errors: HttpErrorResponse) => {
+        alert(errors);
+        this.initMainChart();
+      };
+
+
+
   }
 
   public mainChart: IChartProps = {};
+  public dashdata: DashboardV;
 
   public random(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  initMainChart(period: string = 'Month') {
+  initMainChart(period: string = 'Day') {
+    this.dashdata = {
+      newUsers: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      allUsers: 0,
+      activeAuth: 0,
+      allAuth: 0,
+      recentUsers: [{ name: "Default", lastlogin: "10:10:10", role: "Default" }],
+      roleVisit: { admin: 0, director: 0, nuser: 0 },
+      todayLogin: 0,
+      pageViewToday: 0,
+      maleUsers: 0,
+      femaleUsers: 0,
+      allEmployee: 0,
+      allDivision: 0
+    };
+    this.authService.getDashboardData().subscribe(
+      (response: DashboardV) => {
+
+        this.dashdata = response;
+        console.log(this.dashdata.newUsers);
+        this.initMainChartLtr();
+      }
+    ),
+      (errors: HttpErrorResponse) => {
+        alert(errors);
+      };
+    this.initMainChartLtr();
+  }
+  initMainChartLtr() {
     const brandSuccess = getStyle('--cui-success') ?? '#4dbd74';
     const brandInfo = getStyle('--cui-info') ?? '#20a8d8';
     const brandInfoBg = hexToRgba(getStyle('--cui-info'), 10) ?? '#20a8d8';
@@ -34,47 +94,24 @@ export class DashboardChartsData {
 
     // mainChart
     // mainChart
-    this.mainChart['elements'] = period === 'Month' ? 12 : 27;
+    this.mainChart['elements'] = 31;
     this.mainChart['Data1'] = [];
-    this.mainChart['Data2'] = [];
-    this.mainChart['Data3'] = [];
 
-    // generate random values for mainChart
+
     for (let i = 0; i <= this.mainChart['elements']; i++) {
-      this.mainChart['Data1'].push(this.random(50, 240));
-      this.mainChart['Data2'].push(this.random(20, 160));
-      this.mainChart['Data3'].push(65);
+      //alert(i);
+
+      this.mainChart['Data1'].push(this.dashdata.newUsers[i]);
+
     }
 
     let labels: string[] = [];
-    if (period === 'Month') {
-      labels = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-      ];
-    } else {
-      /* tslint:disable:max-line-length */
-      const week = [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday'
-      ];
-      labels = week.concat(week, week, week);
-    }
+
+    labels = [
+      "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18",
+      "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"
+    ]
+
 
     const colors = [
       {
@@ -106,16 +143,6 @@ export class DashboardChartsData {
         data: this.mainChart['Data1'],
         label: 'Current',
         ...colors[0]
-      },
-      {
-        data: this.mainChart['Data2'],
-        label: 'Previous',
-        ...colors[1]
-      },
-      {
-        data: this.mainChart['Data3'],
-        label: 'BEP',
-        ...colors[2]
       }
     ];
 
@@ -125,7 +152,7 @@ export class DashboardChartsData {
       },
       tooltip: {
         callbacks: {
-          labelColor: function(context: any) {
+          labelColor: function (context: any) {
             return {
               backgroundColor: context.dataset.borderColor
             };
@@ -145,10 +172,10 @@ export class DashboardChartsData {
         },
         y: {
           beginAtZero: true,
-          max: 250,
+          max: 50,
           ticks: {
             maxTicksLimit: 5,
-            stepSize: Math.ceil(250 / 5)
+            stepSize: Math.ceil(50 / 5)
           }
         }
       },

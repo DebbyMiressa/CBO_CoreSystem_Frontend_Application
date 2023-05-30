@@ -54,9 +54,11 @@ export class AuthorityService {
 
   public getAuthImage(id: number): Observable<any>{
     this.init();
-    alert(id);
     return this.http.get<any>(`${this.apiServiceUrl}/authority/sid/${id}`, this.httpOptions)
   }
 
-
+  public getDashboardData(): Observable<any>{
+    this.init();
+    return this.http.get<any>(`${this.apiServiceUrl}/authority/dashboard`, this.httpOptions)
+  }
 }

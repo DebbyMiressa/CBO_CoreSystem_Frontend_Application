@@ -1,5 +1,11 @@
 <div class="login-container">
+
+  <div class="bigLogo">
+    <img src="/assets/BG4.png">
+  </div>
+
   <div id="login-box">
+
     <div class="cooplogo">
       <img src="/assets/Cooplogo.svg" alt="Coop logo">
     </div>
@@ -15,7 +21,6 @@
           required>
         <label for="float-input">Password</label>
       </span>
-
       <button pButton type="submit" label="Login" [disabled]="submitted || !form.valid" value="Login"></button>
     </form>
 

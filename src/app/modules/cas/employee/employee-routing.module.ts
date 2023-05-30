@@ -14,17 +14,17 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'viewEmployee'
+        redirectTo: 'employeeTable'
       },
       {
-        path: 'addEmployee',
+        path: 'newEmployee',
         component: NewEmployeeComponent,
         data: {
           title: 'New Employee'
         }
       },
       {
-        path: 'viewEmployee',
+        path: 'employeeTable',
         component: EmployeeTableComponent,
         data: {
           title: 'Employee Table'

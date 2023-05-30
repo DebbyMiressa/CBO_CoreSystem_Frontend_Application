@@ -7,87 +7,158 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DivisionService } from 'src/app/services/division.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-buttons',
   templateUrl: './newEmployee.component.html',
   styleUrls: ['./newEmployee.component.scss'],
-  providers: [MessageService]
+  providers: [MessageService, DatePipe]
 })
 
 
-export class NewEmployeeComponent implements OnInit{
+export class NewEmployeeComponent implements OnInit {
   public divisions: Division[] = [];
   public employees: Employee[] = [];
   public employeeR: Employee[] = [];
-  public employee:Employee;
+  public employee: Employee;
+  selectedFiles2?: File;
   update: Boolean = false;
   newDiv: Boolean = true;
   selectedDivision: Division;
-  router: Router;
-  public idY:number;
-  date: Date;
-  uploadedFiles: any[] = [];
+  public idY: number;
+  gender: string;
   maxDate: Date;
-  selectedGender: string;
-  genders = [
-    {name: 'Male', code: 'GENDER_MALE'},
-    {name: 'Female', code: 'GENDER_FEMALE'}
-  ];
 
-  constructor(private divisionService: DivisionService ,private employeeService: EmployeeService, private activatedRoute: ActivatedRoute, private messageService: MessageService) { }
+  uploadedFiles: any[] = [];
+  myDate = new Date();
 
-  ngOnInit(){
-    this.maxDate = new Date();
-    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
+
+  constructor(private datePipe: DatePipe, private router: Router, private divisionService: DivisionService, private employeeService: EmployeeService, private activatedRoute: ActivatedRoute, private messageService: MessageService) {
+
+    //this.maxDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
+  }
+  ngOnInit() {
     this.getEmplloyees();
     this.getDivisions();
     var x = this.activatedRoute.snapshot.paramMap.get("id");
     this.idY = +x;
-    if(this.idY){
+    if (this.idY) {
       this.getEmployee(this.idY);
       this.update = true;
       this.newDiv = false;
     }
 
+    this.maxDate = this.myDate;
+  }
+
+  onSelect(event) {
+    this.selectedFiles2 = event.files[0];
+    for (let file of event.files) {
+      this.selectedFiles2 = file
+    }
   }
 
   public addEmplloyee(addEmplForm: NgForm): void {
-      this.employeeService.addEmployee(addEmplForm.value).subscribe(
-        (response: Employee) => {
-          console.log(response)
-          this.getEmplloyees();
-          window.location.reload();
-        },
-        (error: HttpErrorResponse) =>{
-          alert(error.message)
-        }
-        );
-}
+    const formData = new FormData();
 
-public updateEmployee(updateEmplForm: NgForm): void {
-      this.employeeService.updateEmployee(updateEmplForm.value).subscribe(
+    formData.append("givenName", addEmplForm.value.givenName)
+    formData.append("fatherName", addEmplForm.value.fatherName)
+    formData.append("grandFatherName", addEmplForm.value.grandFatherName)
+    formData.append("position", addEmplForm.value.position)
+    formData.append("email", addEmplForm.value.email)
+    formData.append("phoneNumber", addEmplForm.value.phoneNumber)
+    formData.append("divisionId", addEmplForm.value.divisionId.id)
+    formData.append("cboEmail", addEmplForm.value.cboEmail)
+    formData.append("birthDate", addEmplForm.value.birthDate)
+    formData.append("gender", addEmplForm.value.gender)
+
+    if (this.selectedFiles2) {
+      formData.append('signatureImage', this.selectedFiles2);
+      this.employeeService.addEmployee(formData).subscribe(
         (response: Employee) => {
-          console.log(response)
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Employee is created.' });
+          setTimeout(() => { this.router.navigate(['employee']); }, 1000);
           this.getEmplloyees();
         },
-        (error: HttpErrorResponse) =>{
-          alert(error.message)
+        (errors: HttpErrorResponse) => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: errors.error.message });
         }
-        );
-}
+      );
+
+      this.selectedFiles2 = undefined;
+    }
+    else {
+      formData.append('signatureImage', null);
+
+      this.employeeService.addEmployee(formData).subscribe(
+        (response: Employee) => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Employee is updated.' });
+          setTimeout(() => { this.router.navigate(['employee']); }, 1000);
+          this.getEmplloyees();
+        },
+        (errors: HttpErrorResponse) => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: errors.error.message });
+        }
+      );
+    }
+  }
+
+  public updateEmployee(updateEmployee: NgForm): void {
+
+    const formData = new FormData();
+
+    formData.append("givenName", updateEmployee.value.givenName)
+    formData.append("fatherName", updateEmployee.value.fatherName)
+    formData.append("grandFatherName", updateEmployee.value.grandFatherName)
+    formData.append("position", updateEmployee.value.position)
+    formData.append("email", updateEmployee.value.email)
+    formData.append("phoneNumber", updateEmployee.value.phoneNumber)
+    formData.append("divisionId", updateEmployee.value.divisionId.id)
+    formData.append("id", updateEmployee.value.id)
+    formData.append("cboEmail", updateEmployee.value.cboEmail)
+    formData.append("birthDate", updateEmployee.value.birthDate)
+    formData.append("gender", updateEmployee.value.gender)
+
+    if (this.selectedFiles2) {
+      formData.append('signatureImage', this.selectedFiles2);
+      this.employeeService.updateEmployee(formData).subscribe(
+        (response: Employee) => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Employee is updated.' });
+          setTimeout(() => { this.router.navigate(['employee']); }, 1000);
+          this.getEmplloyees();
+        },
+        (errors: HttpErrorResponse) => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: errors.error.message });
+        }
+      );
+      this.selectedFiles2 = undefined;
+    }
+    else {
+      formData.append('signatureImage', null);
+
+      this.employeeService.updateEmployee(formData).subscribe(
+        (response: Employee) => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Employee is updated.' });
+          setTimeout(() => { this.router.navigate(['employee']); }, 1000);
+          this.getEmplloyees();
+        },
+        (errors: HttpErrorResponse) => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: errors.error.message });
+        }
+      );
+    }
+  }
 
   public getEmplloyees(): void {
     this.employeeService.getEmployees().subscribe(
       (response: Employee[]) => {
         this.employees = response;
-        console.log(this.employees)
       },
-      (error: HttpErrorResponse) =>{
-        alert(error.message)
+      (errors: HttpErrorResponse) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: errors.error.message });
       }
-      );
+    );
   }
 
   public getEmployee(id: number): Employee[] {
@@ -95,27 +166,24 @@ public updateEmployee(updateEmplForm: NgForm): void {
       (response: Employee) => {
         this.employeeR = [response];
         this.employee = response;
-        console.log(this.employeeR)
         this.selectedDivision = this.employee.division;
       },
-      (error: HttpErrorResponse) =>{
-        alert(error.message)
+      (errors: HttpErrorResponse) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: errors.error.message });
       }
-      );
-      return this.employeeR;
+    );
+    return this.employeeR;
   }
 
   public getDivisions(): void {
     this.divisionService.getDivisions().subscribe(
       (response: Division[]) => {
         this.divisions = response;
-        console.log(this.divisions)
-
       },
-      (error: HttpErrorResponse) =>{
-        alert(error.message)
+      (errors: HttpErrorResponse) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: errors.error.message });
       }
-      );
+    );
   }
 
 }
