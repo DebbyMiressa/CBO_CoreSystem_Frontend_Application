@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NewCIPMComponent } from './newCIPM/newCIPM.component';
 import { CIPMTableComponent } from './CIPMTable/CIPMTable.component';
 import { NewCTComponent } from './newCT/newCT.component';
+import { SanctionTableComponent } from '../../sl/SanctionTable/SanctionTable.component';
 
 
 const routes: Routes = [
@@ -38,6 +39,7 @@ const routes: Routes = [
           title: 'Collateral Type',
         },
       },
+   
     ],
   },
 ];
