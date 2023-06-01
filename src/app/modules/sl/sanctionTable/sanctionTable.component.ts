@@ -114,7 +114,7 @@ combineLatestWith([
 
       this.dataNbeChecker = 1;
       this.sanctionData = [...Array(Object.keys(data).length).keys()]
-      console.log("Data Nbe List", this.nbeBlackListList[0].name);
+      console.log("Data Nbe List", this.nbeBlackListList);
       console.log("Nbe Data Length: ", this.dataNbeChecker)
     } else {
       this.dataNbeChecker = 0;
@@ -185,10 +185,9 @@ combineLatestWith([
             // UNited Nation Individual Search
           
             this.sanctionListService.getUNIndividualSearchResult(searchResult).subscribe(data=>{
-              this.unIndividualResponseDetailList =  null;
-              console.log(this.unIndividualResponseDetailList)
+       
               this.unIndividualResponseDetailList = data;
-              console.log(this.unIndividualResponseDetailList)
+           
               if (this.unIndividualResponseDetailList?.length > 0) {
                 this.dataUnIndividualChecker = 1;
                 console.log("UN Individual Data Length: ", this.dataUnIndividualChecker)
@@ -357,6 +356,7 @@ combineLatestWith([
     console.log("Id from Arg: ", Id as string)
     this.sanctionListService.unSanctionDetail(Id).subscribe(data => {
       this.unSanctionList = data;
+   
       console.log("UN Individual IN Details: ", this.unSanction)
       console.log("Id from Arg After call: ", Id)
       this.detailRetrieved = true;
