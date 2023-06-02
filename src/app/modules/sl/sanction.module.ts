@@ -25,6 +25,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule} from 'primeng/calendar';
 
 
+
 // CoreUI Modules
 import {
   AccordionModule,
@@ -87,7 +88,8 @@ import {
     BlockUIModule,
     ProgressSpinnerModule,
     AnimateModule,
-    CalendarModule
+    CalendarModule,
+    InputTextModule
   ],
   declarations: [
     SanctionTableComponent

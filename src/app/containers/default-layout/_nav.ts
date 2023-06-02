@@ -383,12 +383,6 @@ navItemsSanctionAdmin = {
 }
 
 navItemsSanctionView = {
-  name: 'Sanction List',
-  url: '/sv',
-  children: [
-    {
-      name: 'Home',
-      title: true
-    },
-  ]
+  name: 'View',
+  url: '/Sanction/viewSanction'
 }
