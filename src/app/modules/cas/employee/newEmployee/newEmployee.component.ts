@@ -22,6 +22,7 @@ export class NewEmployeeComponent implements OnInit {
   public employees: Employee[] = [];
   public employeeR: Employee[] = [];
   public employee: Employee;
+  selectedFiles1?: File;
   selectedFiles2?: File;
   update: Boolean = false;
   newDiv: Boolean = true;
@@ -52,7 +53,14 @@ export class NewEmployeeComponent implements OnInit {
     this.maxDate = this.myDate;
   }
 
-  onSelect(event) {
+  onSelect1(event) {
+    this.selectedFiles1 = event.files[0];
+    for (let file of event.files) {
+      this.selectedFiles1 = file
+    }
+  }
+
+  onSelect2(event) {
     this.selectedFiles2 = event.files[0];
     for (let file of event.files) {
       this.selectedFiles2 = file
@@ -61,7 +69,6 @@ export class NewEmployeeComponent implements OnInit {
 
   public addEmplloyee(addEmplForm: NgForm): void {
     const formData = new FormData();
-
     formData.append("givenName", addEmplForm.value.givenName)
     formData.append("fatherName", addEmplForm.value.fatherName)
     formData.append("grandFatherName", addEmplForm.value.grandFatherName)
@@ -73,35 +80,31 @@ export class NewEmployeeComponent implements OnInit {
     formData.append("birthDate", addEmplForm.value.birthDate)
     formData.append("gender", addEmplForm.value.gender)
 
+    if (this.selectedFiles1) {
+      formData.append('employeeImage', this.selectedFiles1);
+      this.selectedFiles1 = undefined;
+    }
+    else {
+      formData.append('employeeImage', null);
+    }
+
     if (this.selectedFiles2) {
       formData.append('signatureImage', this.selectedFiles2);
-      this.employeeService.addEmployee(formData).subscribe(
-        (response: Employee) => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Employee is created.' });
-          setTimeout(() => { this.router.navigate(['employee']); }, 1000);
-          this.getEmplloyees();
-        },
-        (errors: HttpErrorResponse) => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: errors.error.message });
-        }
-      );
-
       this.selectedFiles2 = undefined;
     }
     else {
       formData.append('signatureImage', null);
-
-      this.employeeService.addEmployee(formData).subscribe(
-        (response: Employee) => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Employee is updated.' });
-          setTimeout(() => { this.router.navigate(['employee']); }, 1000);
-          this.getEmplloyees();
-        },
-        (errors: HttpErrorResponse) => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: errors.error.message });
-        }
-      );
     }
+    this.employeeService.addEmployee(formData).subscribe(
+      (response: Employee) => {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Employee is updated.' });
+        setTimeout(() => { this.router.navigate(['employee']); }, 1000);
+        this.getEmplloyees();
+      },
+      (errors: HttpErrorResponse) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: errors.error.message });
+      }
+    );
   }
 
   public updateEmployee(updateEmployee: NgForm): void {
@@ -120,34 +123,31 @@ export class NewEmployeeComponent implements OnInit {
     formData.append("birthDate", updateEmployee.value.birthDate)
     formData.append("gender", updateEmployee.value.gender)
 
+    if (this.selectedFiles1) {
+      formData.append('employeeImage', this.selectedFiles1);
+      this.selectedFiles1 = undefined;
+    }
+    else {
+      formData.append('employeeImage', null);
+    }
+
     if (this.selectedFiles2) {
       formData.append('signatureImage', this.selectedFiles2);
-      this.employeeService.updateEmployee(formData).subscribe(
-        (response: Employee) => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Employee is updated.' });
-          setTimeout(() => { this.router.navigate(['employee']); }, 1000);
-          this.getEmplloyees();
-        },
-        (errors: HttpErrorResponse) => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: errors.error.message });
-        }
-      );
       this.selectedFiles2 = undefined;
     }
     else {
       formData.append('signatureImage', null);
-
-      this.employeeService.updateEmployee(formData).subscribe(
-        (response: Employee) => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Employee is updated.' });
-          setTimeout(() => { this.router.navigate(['employee']); }, 1000);
-          this.getEmplloyees();
-        },
-        (errors: HttpErrorResponse) => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: errors.error.message });
-        }
-      );
     }
+    this.employeeService.updateEmployee(formData).subscribe(
+      (response: Employee) => {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Employee is updated.' });
+        setTimeout(() => { this.router.navigate(['employee']); }, 1000);
+        this.getEmplloyees();
+      },
+      (errors: HttpErrorResponse) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: errors.error.message });
+      }
+    );
   }
 
   public getEmplloyees(): void {

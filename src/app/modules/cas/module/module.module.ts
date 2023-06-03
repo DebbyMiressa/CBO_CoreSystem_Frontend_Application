@@ -1,38 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import  {ButtonModule } from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
-
-
-
-import { FormModule } from '@coreui/angular';
-import { NewUserComponent } from './newUser/newUser.component';
-import { UserTableComponent } from './userTable/userTable.component';
-import { UserRoutingModule } from './user-routing.module';
-import { IconModule } from '@coreui/icons-angular';
-
+import {TableModule} from 'primeng/table';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
 import { ConfirmationService, MessageService } from "primeng/api";
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {ToastModule} from 'primeng/toast';
+
+import { FormModule } from '@coreui/angular';
+import { NewModuleComponent } from './newModule/newModule.component';
+import { ModuleTableComponent } from './moduleTable/moduleTable.component';
+import { ModuleRoutingModule } from './module-routing.module';
+import { IconModule } from '@coreui/icons-angular';
 import { MessagesModule } from 'primeng/messages';
-import { PasswordModule } from 'primeng/password';
-import { DividerModule } from 'primeng/divider';
-import { CardModule } from 'primeng/card';
-import { BlockUIModule } from 'primeng/blockui';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { AnimateModule } from 'primeng/animate';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DropdownModule } from 'primeng/dropdown';
-import { MultiSelectModule } from 'primeng/multiselect';
+import { FileUploadModule } from 'primeng/fileupload';
 
-
-// CoreUI Modules
 import {
   AccordionModule,
   BadgeModule,
   BreadcrumbModule,
+  CardModule,
   CarouselModule,
   CollapseModule,
   GridModule,
@@ -49,16 +39,16 @@ import {
   UtilitiesModule
 } from '@coreui/angular';
 
-
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    UserRoutingModule,
     AccordionModule,
     BadgeModule,
     BreadcrumbModule,
     ButtonModule,
+    ModuleRoutingModule,
+    CardModule,
     CollapseModule,
     GridModule,
     UtilitiesModule,
@@ -70,6 +60,7 @@ import {
     ProgressModule,
     SpinnerModule,
     TabsModule,
+    FileUploadModule,
     NavModule,
     TooltipModule,
     CarouselModule,
@@ -82,20 +73,13 @@ import {
     InputTextModule,
     ConfirmPopupModule,
     ToastModule,
-    ConfirmDialogModule,
     MessagesModule,
-    PasswordModule,
-    DividerModule,
-    CardModule,
-    BlockUIModule,
-    ProgressSpinnerModule,
-    AnimateModule,
-    MultiSelectModule
+    ConfirmDialogModule
   ],
   declarations: [
-    NewUserComponent,
-    UserTableComponent
+    NewModuleComponent,
+    ModuleTableComponent,
   ],
   providers: [ConfirmationService, MessageService]
 })
-export class UserModule {}
+export class ModuleModule {}

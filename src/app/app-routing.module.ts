@@ -111,6 +111,11 @@ const routes: Routes = [
           import('./modules/cas/division/division.module').then((m) => m.DivisionModule)
       },
       {
+        path: 'module',
+        loadChildren: () =>
+          import('./modules/cas/module/module.module').then((m) => m.ModuleModule)
+      },
+      {
         path: 'authority',
         loadChildren: () =>
           import('./modules/sasv/authority/authority.module').then((m) => m.AuthorityModule)

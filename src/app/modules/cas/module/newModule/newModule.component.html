@@ -1,0 +1,46 @@
+<div *ngIf="newMod">
+  <form #addModForm="ngForm" (ngSubmit)="addModule(addModForm)">
+   <div class="flex flex-wrap gap-2 mb-2">
+    <div class="flex-auto">
+        <label for="integer" class=" block mb-2"> Module Name: </label>
+        <input pInputText id="integer" pKeyFilter="int"  ngModel name="name" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-2 mb-6">
+    <div class="flex-auto">
+      <label for="hex" class=" block mb-2"> Parent: </label>
+        <p-dropdown [options]="modules" name="parent" optionLabel="name" [filter]="true" ngModel [(ngModel)]="selectedModule" filterBy="name" [showClear]="true" placeholder="Choose Parent Module"
+        styleClass="p-password" [style]="{'width':'630px','height':'45px'}"  >
+        <ng-template pTemplate="selectedItem">
+          <div class="flex align-items-center gap-2" *ngIf="selectedModule">
+              <div>{{ selectedModule.name}}</div>
+          </div>
+      </ng-template>
+            <ng-template let-module pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                    <div>{{module.name}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+  </div>
+  </div>
+       <p-button label="Create Module" [disabled]="addModForm.invalid" type="submit"></p-button>
+  </form>
+
+</div>
+
+<div *ngIf="update">
+    <form #updateModForm="ngForm" (ngSubmit)="updateDiivision(updateModForm)">
+      <input type="hidden" name="id" ngModel [(ngModel)]="idY">
+
+      <div class="flex flex-wrap gap-2 mb-2">
+        <div class="flex-auto">
+            <label for="integer" class=" block mb-2"> Module Name: </label>
+            <input pInputText id="integer" pKeyFilter="int"  ngModel [(ngModel)]="module.name" name="name" [style]="{'width':'630px','height':'45px'}"  required minlength="3" />
+          </div>
+
+      </div>
+         <p-button label="Update Module" [disabled]="updateModForm.invalid" type="submit"></p-button>
+    </form>
+</div>

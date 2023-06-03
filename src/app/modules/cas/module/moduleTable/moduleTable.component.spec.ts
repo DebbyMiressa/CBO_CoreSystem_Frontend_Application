@@ -1,21 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { AccordionModule, CardModule, GridModule } from '@coreui/angular';
+import { CardModule, GridModule } from '@coreui/angular';
 import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../../icons/icon-subset';
-import { DchequeTableComponent } from './DchequeTable.component';
+import { ModuleTableComponent } from './moduleTable.component';
 
-describe('DchequeTableComponent', () => {
-  let component: DchequeTableComponent;
-  let fixture: ComponentFixture<DchequeTableComponent>;
+describe('SelectComponent', () => {
+  let component: ModuleTableComponent;
+  let fixture: ComponentFixture<ModuleTableComponent>;
   let iconSetService: IconSetService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DchequeTableComponent],
-      imports: [AccordionModule, NoopAnimationsModule, CardModule, GridModule, RouterTestingModule],
+      declarations: [ModuleTableComponent],
+      imports: [CardModule, GridModule, RouterTestingModule],
       providers: [IconSetService]
     })
       .compileComponents();
@@ -25,7 +24,7 @@ describe('DchequeTableComponent', () => {
     iconSetService = TestBed.inject(IconSetService);
     iconSetService.icons = { ...iconSubset };
 
-    fixture = TestBed.createComponent(DchequeTableComponent);
+    fixture = TestBed.createComponent(ModuleTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

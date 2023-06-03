@@ -10,14 +10,21 @@ import { Division } from '../models/division';
 export class EmployeeService {
 
   private httpOptions;
+  private formDataOptions;
   private apiServiceUrl;
   private init() {
     this.httpOptions = {
       headers: new HttpHeaders({
         'content-type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('access_token_1')}`
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
       })
     };
+    this.formDataOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+      })
+    }
+
     this.apiServiceUrl = localStorage.getItem('url_1');
   }
 
@@ -37,11 +44,11 @@ export class EmployeeService {
   }
   public addEmployee(employee: FormData): Observable<any>{
     this.init();
-    return this.http.post<any>(`${this.apiServiceUrl}/employee/add`, employee, this.httpOptions)
+    return this.http.post<any>(`${this.apiServiceUrl}/employee/add`, employee, this.formDataOptions)
   }
   public updateEmployee(employee: FormData): Observable<any>{
     this.init();
-    return this.http.put(`${this.apiServiceUrl}/employee/update`,employee, this.httpOptions)
+    return this.http.put(`${this.apiServiceUrl}/employee/update`,employee, this.formDataOptions)
   }
   public deleteEmployee(employeeId: number): Observable<any>{
     this.init();

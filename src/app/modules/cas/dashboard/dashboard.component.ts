@@ -64,8 +64,8 @@ export class DashboardComponent implements OnInit {
       localStorage.removeItem('isReloaded');
     }
     console.log("email = "+localStorage.getItem('email'))
-    console.log("access_token_1 = "+localStorage.getItem('access_token_1'))
-    console.log("access_token_2 = "+localStorage.getItem('access_token_2'))
+    console.log("access_token = "+localStorage.getItem('access_token'))
+    console.log("access_token = "+localStorage.getItem('access_token'))
     console.log("url_0 = "+localStorage.getItem('url_0'))
     console.log("url_1 = "+localStorage.getItem('url_1'))
     console.log("url_2 = "+localStorage.getItem('url_2'))

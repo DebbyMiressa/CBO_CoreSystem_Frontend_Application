@@ -47,10 +47,5 @@ export interface JwtResponse {
             }
         ];
     };
-    accessTokens: [
-      {
-        moduleId: number;
-        token: string;
-      }
-    ];
+    accessToken: string;
 }

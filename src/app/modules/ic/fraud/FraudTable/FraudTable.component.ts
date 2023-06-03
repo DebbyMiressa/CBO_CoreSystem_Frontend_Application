@@ -77,10 +77,22 @@ export class FraudTableComponent {
   maxDate: Date;
 
   ngOnInit() {
-    this.getFrauds(this.role);
-    console.log("Role = ", this.role);
+    this.populateRoles();
+    this.getFrauds(this.roles);
+    console.log("Role = ", this.roles);
     this.getCurrentDate();
     this.primengConfig.ripple = true;
+  }
+
+  populateRoles(): void {
+    let index = 0;
+    let cond = localStorage.getItem('role_'+index);
+    while(cond) {
+      console.log("role_"+index+" = "+cond)
+      this.roles.push(cond);
+      index++;
+      cond = localStorage.getItem('role_'+index);
+    }
   }
 
   filterByDate(dataTable: any) {
@@ -125,7 +137,7 @@ export class FraudTableComponent {
   }
 
   branchId: number = Number(localStorage.getItem('branchId'));
-  role: string = localStorage.getItem('role');
+  roles: string[] = [];
 
   constructor(private filterService: FilterService, private fraudService: FraudService, private branchService: BranchService, private router: Router, private confirmationService: ConfirmationService,
     private messageService: MessageService, private primengConfig: PrimeNGConfig, private timeService: TimeService) { }
@@ -138,7 +150,7 @@ export class FraudTableComponent {
   authorizeFrauds(id: number): void {
     this.fraudService.authorizeFraud(id).subscribe(
       (response: Fraud) => {
-        this.getFrauds(this.role);
+        this.getFrauds(this.roles);
       }
     );
   }
@@ -148,11 +160,11 @@ export class FraudTableComponent {
 
     this.fraudService.deleteFraud(this.deleteId).subscribe(
       (response: void) => {
-        this.getFrauds(this.role);
+        this.getFrauds(this.roles);
       },
       (error: HttpErrorResponse) => {
         alert(error.message)
-        this.getFrauds(this.role);
+        this.getFrauds(this.roles);
       }
     );
 
@@ -175,8 +187,8 @@ export class FraudTableComponent {
     });
   }
 
-  public getFrauds(role: string): void {
-    if (role == "ROLE_IC_ADMIN") {
+  public getFrauds(roles: string[]): void {
+    if (roles.includes("ROLE_IC_ADMIN")) {
       this.fraudService.getFrauds().subscribe(
         (response: Fraud[]) => {
           this.frauds = response;
@@ -188,7 +200,7 @@ export class FraudTableComponent {
         }
       );
     }
-    else if (role == "ROLE_BRANCH_IC" || role == "ROLE_BRANCH_MANAGER") {
+    else if (roles.includes("ROLE_BRANCH_IC") || roles.includes("ROLE_BRANCH_MANAGER")) {
       this.fraudService.getFraudForBranch(this.branchId).subscribe(
         (response: Fraud[]) => {
           this.frauds = response;
@@ -200,7 +212,7 @@ export class FraudTableComponent {
         }
       );
     }
-    else if (role == "ROLE_DISTRICT_IC") {
+    else if (roles.includes("ROLE_DISTRICT_IC")) {
       this.branchService.getBranch(this.branchId).subscribe(branch => {
         this.districtId = branch?.district?.id
       });
@@ -220,11 +232,11 @@ export class FraudTableComponent {
   public deleteFraud(): void {
     this.fraudService.deleteFraud(this.deleteId).subscribe(
       (response: void) => {
-        this.getFrauds(this.role);
+        this.getFrauds(this.roles);
       },
       (error: HttpErrorResponse) => {
         alert(error.message)
-        this.getFrauds(this.role);
+        this.getFrauds(this.roles);
       }
     );
   }

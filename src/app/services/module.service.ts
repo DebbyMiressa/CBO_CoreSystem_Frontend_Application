@@ -16,7 +16,7 @@ export class ModuleService {
     this.httpOptions = {
       headers: new HttpHeaders({
         'content-type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('access_token_1')}`
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
       })
     };
    this.apiServiceUrl = localStorage.getItem("url_1");

@@ -2,7 +2,7 @@
 <div class="card" style="width: 80vw; margin-left: -120px;">
   <div class="spacer">
     <span style="font-size: larger; font-weight: bolder;">Collateral Insurance Policy Monitoring Table</span>
-    <button *ngIf="this.role == 'ROLE_IC_ADMIN'" pButton (click)="downloadExcel('cipmTable')"
+    <button *ngIf="this.roles.includes('ROLE_IC_ADMIN')" pButton (click)="downloadExcel('cipmTable')"
       [ngClass]="{updateBlue: true}" style="height: max-content;" class="p-button-sm mt-3 mr-3"
       label="Download as Excel"><svg _ngcontent-yvw-c268="" cIcon="" name="cilCloudDownload" ng-reflect-content=""
         style="margin-right: 10px; color:white" ng-reflect-name="cilCloudDownload" viewBox="0 0 512 512"
@@ -78,7 +78,7 @@
             field="loanAccount"></p-sortIcon></th>
         <th scope="col" pSortableColumn="loanType" style="width:7%">Loan Type</th>
         <th scope="col" pSortableColumn="insuredName" style="width:8%">Insured Name</th>
-        <th scope="col" pSortableColumn="Action" style="width:1%" *ngIf="role == 'ROLE_BRANCH_IC'">Actions</th>
+        <th scope="col" pSortableColumn="Action" style="width:1%" *ngIf="this.roles.includes('ROLE_BRANCH_IC')">Actions</th>
       </tr>
       <p-confirmDialog [style]="{width: '30vw'}" key="positionDialog" [position]="position"
         [baseZIndex]="10000"></p-confirmDialog>
@@ -115,10 +115,9 @@
         <td>{{cipms?.loanAccount}}</td>
         <td>{{cipms?.loanType}}</td>
         <td>{{cipms?.insuredName}}</td>
-        <td *ngIf="role == 'ROLE_BRANCH_IC'">
+        <td *ngIf="this.roles.includes('ROLE_BRANCH_IC')">
           <button pButton (click)="updateCIPMs(cipms?.id)" [ngClass]="{updateBlue: true}" class="p-button-sm mb-3"
             label="Update"></button>
-          <!-- <button pButton (click)="confirmPosition('center', cipms?.id)" class="p-button-sm" label="Delete"></button> -->
         </td>
       </tr>
     </ng-template>

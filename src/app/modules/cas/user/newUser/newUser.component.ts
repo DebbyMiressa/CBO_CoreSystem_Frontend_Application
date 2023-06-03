@@ -8,10 +8,13 @@ import { Branch } from "../../../../models/branch";
 import { UserService } from '../../../../services/user.service';
 import { Employee } from '../../../../models/employee';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { RoleService } from 'src/app/services/role.service';
+import { ModuleService } from 'src/app/services/module.service';
 import { BranchService } from 'src/app/services/branch.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ConfirmationService, Message } from 'primeng/api';
+import { Module } from 'src/app/models/module';
+import { RoleService } from 'src/app/services/role.service';
+
 
 @Component({
   selector: 'app-accordions',
@@ -22,7 +25,9 @@ import { ConfirmationService, Message } from 'primeng/api';
 export class NewUserComponent implements OnInit{
   public users: User[] = [];
   public user: User;
-  public roles: Role [] = [];
+  public roles: Role[] = [];
+  public rolesStr: String[] = [];
+  public modules: Module [] = [];
   public employeeR: Employee[] = [];
   public employees: Employee[] = [];
   public branches: Branch[] = [];
@@ -31,7 +36,7 @@ export class NewUserComponent implements OnInit{
   public idY: number;
   msgs: Message[] = [];
   value: string;
-  selectedRole: Role;
+  selectedModules: Module[];
   selectedBranch: Branch;
   selectedEmployee: Employee;
   selectedState: boolean;
@@ -43,12 +48,13 @@ export class NewUserComponent implements OnInit{
   ];
   active: boolean;
 
-  constructor(private userService: UserService, private employeeService: EmployeeService, private roleService: RoleService,  private branchService: BranchService, private activatedRoute: ActivatedRoute, private role: RoleService) {}
+  constructor(private userService: UserService, private employeeService: EmployeeService, private moduleService: ModuleService,  private branchService: BranchService, private activatedRoute: ActivatedRoute, private roleService: RoleService) {}
 
   ngOnInit(){
+    this.populateRoles();
     this.getEmplloyees();
     this.getUsers();
-    this.getRoles();
+    this.getModules();
     this.getBranches();
     var x = this.activatedRoute.snapshot.paramMap.get("id");
     this.idY = +x;
@@ -60,20 +66,41 @@ export class NewUserComponent implements OnInit{
     }
   }
 
+  populateRoles(): void {
+    let index = 0;
+    let cond = localStorage.getItem('role_' + index);
+    while (cond) {
+      console.log("role_" + index + " = " + cond)
+      this.rolesStr.push(cond);
+      index++;
+      cond = localStorage.getItem('role_' + index);
+    }
+  }
+
   public changeStatus() {
     this.isClicked = !this.isClicked;
   }
 
-  public getRoles(): void {
-    this.roleService.getRoles().subscribe(
-      (response: Role[]) => {
-        this.roles = response;
-        console.log(this.roles)
+  public getModules(): void {
+    this.moduleService.getModules().subscribe(
+      (response: Module[]) => {
+        this.modules = response;
+        console.log(this.modules)
       },
       (error: HttpErrorResponse) =>{
         alert(error.message)
       }
       );
+  }
+
+  checkRole(roleName: string): boolean {
+    let result: boolean = false; // declare a variable to store the result
+    this.rolesStr.forEach(role => {
+      if (role.indexOf(roleName) !== -1) {
+        result = true; // assign true to the result if the role matches
+      }
+    });
+    return result; // return the result at the end of the function
   }
 
   public getBranches(): void {
@@ -147,7 +174,7 @@ export class NewUserComponent implements OnInit{
       (response: User) => {
         this.user = response;
         console.log(this.user)
-      this.selectedRole = this.user.roles[0];
+      this.selectedModules = this.user.modules;
       this.selectedEmployee = this.user.employee;
       this.selectedState = this.user.active;
 
@@ -160,7 +187,7 @@ export class NewUserComponent implements OnInit{
   }
 
   public updateUser(updateUser: NgForm): void {
-     this.selectedRole = null;
+     this.selectedModules = null;
      this.selectedEmployee = null;
      this.selectedState = null;
     this.userService.updateUser(updateUser.value).subscribe(
