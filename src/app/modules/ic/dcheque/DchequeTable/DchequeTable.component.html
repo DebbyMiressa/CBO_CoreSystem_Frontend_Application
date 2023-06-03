@@ -2,7 +2,7 @@
 <div class="card" style="width: 80vw; margin-left: -120px;">
   <div class="spacer">
     <span style="font-size: larger; font-weight: bolder;">Dishounoured Cheques Table</span>
-    <button *ngIf="this.role == 'ROLE_IC_ADMIN'" pButton (click)="downloadExcel('dchequeTable')" [ngClass]="{updateBlue: true}" style="height: max-content;" class="p-button-sm mt-3 mr-3" label="Download as Excel"><svg _ngcontent-yvw-c268="" cIcon="" name="cilCloudDownload" ng-reflect-content="" style="margin-right: 10px; color:white" ng-reflect-name="cilCloudDownload" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" pointer-events="none" role="img" class="icon"><polygon fill="var(--ci-primary-color, currentColor)" points="272 434.744 272 209.176 240 209.176 240 434.744 188.118 382.862 165.49 405.489 256 496 346.51 405.489 323.882 382.862 272 434.744" class="ci-primary"></polygon><path fill="var(--ci-primary-color, currentColor)" d="M400,161.176c0-79.4-64.6-144-144-144s-144,64.6-144,144a96,96,0,0,0,0,192h80v-32H112a64,64,0,0,1,0-128h32v-32a112,112,0,0,1,224,0v32h32a64,64,0,0,1,0,128H320v32h80a96,96,0,0,0,0-192Z" class="ci-primary"></path></svg>  </button>
+    <button *ngIf="this.roles.includes('ROLE_IC_ADMIN')" pButton (click)="downloadExcel('dchequeTable')" [ngClass]="{updateBlue: true}" style="height: max-content;" class="p-button-sm mt-3 mr-3" label="Download as Excel"><svg _ngcontent-yvw-c268="" cIcon="" name="cilCloudDownload" ng-reflect-content="" style="margin-right: 10px; color:white" ng-reflect-name="cilCloudDownload" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" pointer-events="none" role="img" class="icon"><polygon fill="var(--ci-primary-color, currentColor)" points="272 434.744 272 209.176 240 209.176 240 434.744 188.118 382.862 165.49 405.489 256 496 346.51 405.489 323.882 382.862 272 434.744" class="ci-primary"></polygon><path fill="var(--ci-primary-color, currentColor)" d="M400,161.176c0-79.4-64.6-144-144-144s-144,64.6-144,144a96,96,0,0,0,0,192h80v-32H112a64,64,0,0,1,0-128h32v-32a112,112,0,0,1,224,0v32h32a64,64,0,0,1,0,128H320v32h80a96,96,0,0,0,0-192Z" class="ci-primary"></path></svg>  </button>
   </div>
     <tr>
       <th id="" colspan="13">
@@ -46,8 +46,8 @@
                 <th scope="col" pSortableColumn="chequeType" style="width:7%">Cheque Type</th>
                 <th scope="col" pSortableColumn="nameOfBeneficiary" style="width:8%">Name of Beneficiary</th>
                 <th scope="col" pSortableColumn="frequency" style="width:8%">Frequency</th>
-                <th scope="col" pSortableColumn="actionTaken" style="width:8%">Action Taken</th>
-                <th scope="col" pSortableColumn="Action" style="width:1%" *ngIf="this.role == 'ROLE_BRANCH_IC'">Actions</th>
+                <th scope="col" *ngIf="this.roles.includes('ROLE_BRANCH_IC')" pSortableColumn="actionTaken" style="width:8%">Action Taken</th>
+                <th scope="col" pSortableColumn="Action" style="width:1%" *ngIf="this.roles.includes('ROLE_BRANCH_IC')">Actions</th>
             </tr>
             <p-confirmDialog [style]="{width: '30vw'}" key="positionDialog" [position]="position" [baseZIndex]="10000"></p-confirmDialog>
 
@@ -69,9 +69,8 @@
             <td>{{dcheques?.nameOfBeneficiary}}</td>
             <td>{{dcheques?.frequency}}</td>
             <td>{{dcheques?.actionTaken?.name}}</td>
-            <td *ngIf="this.role == 'ROLE_BRANCH_IC'">
+            <td *ngIf="this.roles.includes('ROLE_BRANCH_IC')">
               <button pButton (click)="updateDcheques(dcheques?.id)" [ngClass]="{updateBlue: true}" class="p-button-sm mb-3" label="Update"></button>
-              <!-- <button pButton (click)="confirmPosition('center', dcheques?.id)" class="p-button-sm" label="Delete"></button> -->
             </td>
           </tr>
         </ng-template>

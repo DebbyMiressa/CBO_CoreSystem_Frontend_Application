@@ -1,6 +1,6 @@
 import { Division } from "./division";
 
-export interface JwtResponce {
+export interface JwtResponse {
     user: {
         id: number,
         username: string;
@@ -47,10 +47,5 @@ export interface JwtResponce {
             }
         ];
     };
-    accessTokens: [
-      {
-        moduleId: number;
-        token: string;
-      }
-    ];
+    accessToken: string;
 }

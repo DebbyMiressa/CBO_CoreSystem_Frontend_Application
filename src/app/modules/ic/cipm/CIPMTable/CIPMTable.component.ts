@@ -62,11 +62,12 @@ export class CIPMTableComponent {
   minDate: Date;
   maxDate: Date;
   currentDate: Date;
+  roles: string[] = [];
 
   ngOnInit(){
-    console.log(this.role)
+    this.populateRoles();
     this.getCurrentDate();
-    this.getCIPMs(this.role);
+    this.getCIPMs(this.roles);
     this.primengConfig.ripple = true;
     console.log("Min Date = ",this.minDate)
     this.filterService.register('dateRange', (value: any, filter: any): boolean => {
@@ -95,6 +96,17 @@ export class CIPMTableComponent {
       // if no dates are specified, return true for all values
       return true;
     });
+  }
+
+  populateRoles(): void {
+    let index = 0;
+    let cond = localStorage.getItem('role_'+index);
+    while(cond) {
+      console.log("role_"+index+" = "+cond)
+      this.roles.push(cond);
+      index++;
+      cond = localStorage.getItem('role_'+index);
+    }
   }
 
 filterByDate(dataTable: any) {
@@ -162,7 +174,6 @@ getCurrentDate() {
   }
 
   branchId : number = Number(localStorage.getItem('branchId'));
-  role: string = localStorage.getItem('role_0');
 
   constructor(private filterService: FilterService, private cipmService: CIPMService, private branchService: BranchService, private router:Router,private confirmationService: ConfirmationService,
     private messageService: MessageService,private primengConfig: PrimeNGConfig, private timeService: TimeService) { }
@@ -177,11 +188,11 @@ getCurrentDate() {
 
         this.cipmService.deleteCIPM(this.deleteId).subscribe(
           (response: void) => {
-            this.getCIPMs(this.role);
+            this.getCIPMs(this.roles);
           },
           (error: HttpErrorResponse) =>{
             alert(error.message)
-            this.getCIPMs(this.role);
+            this.getCIPMs(this.roles);
           }
           );
 
@@ -204,8 +215,8 @@ getCurrentDate() {
     });
 }
 
-  public getCIPMs(role: string): void {
-    if (role == "ROLE_IC_ADMIN") {
+  public getCIPMs(roles: string[]): void {
+    if (roles.indexOf("ROLE_IC_ADMIN") !== -1) {
       this.cipmService.getCIPMs().subscribe(
         (response: CIPM[]) => {
           this.cipms = response;
@@ -217,7 +228,7 @@ getCurrentDate() {
         }
       );
     }
-    else if (role == "ROLE_BRANCH_IC") {
+    else if (roles.indexOf("ROLE_BRANCH_IC") !== -1) {
       this.cipmService.getCIPMForBranch(this.branchId).subscribe(
         (response: CIPM[]) => {
           this.cipms = response;
@@ -229,7 +240,7 @@ getCurrentDate() {
         }
       );
     }
-    else if (role == "ROLE_DISTRICT_IC") {
+    else if (roles.indexOf("ROLE_DISTRICT_IC") !== -1) {
       this.branchService.getBranch(this.branchId).subscribe(branch => {
         this.districtId = branch?.district?.id
         console.log("DistrictId = ", this.districtId);
@@ -251,11 +262,11 @@ getCurrentDate() {
   public deleteCIPM(): void{
     this.cipmService.deleteCIPM(this.deleteId).subscribe(
       (response: void) => {
-        this.getCIPMs(this.role);
+        this.getCIPMs(this.roles);
       },
       (error: HttpErrorResponse) =>{
         alert(error.message)
-        this.getCIPMs(this.role);
+        this.getCIPMs(this.roles);
       }
       );
   }

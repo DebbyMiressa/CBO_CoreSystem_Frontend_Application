@@ -10,7 +10,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { InputTextModule } from 'primeng/inputtext';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-
+import { CalendarModule } from 'primeng/calendar';
+import { ChipsModule } from 'primeng/chips';
+import { DropdownModule as Drop}  from 'primeng/dropdown';
 
 import {
   PERFECT_SCROLLBAR_CONFIG,
@@ -34,9 +36,9 @@ import {
   BreadcrumbModule,
   ButtonGroupModule,
   CardModule,
-  DropdownModule,
   FooterModule,
   FormModule,
+  DropdownModule,
   GridModule,
   HeaderModule,
   ListGroupModule,
@@ -52,7 +54,9 @@ import {
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { LoginComponent } from './login/login.component';
-
+import { MemoComponent } from './../app/modules/sasv/memo/memo.component';
+import { LetterComponent } from './../app/modules/sasv/memo/letter/letter.component';
+import { SearchComponent } from './../app/modules/sasv/memo/search/search.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -65,7 +69,7 @@ const APP_CONTAINERS = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, ...APP_CONTAINERS, LoginComponent ],
+  declarations: [AppComponent, ...APP_CONTAINERS, LoginComponent, MemoComponent, LetterComponent, SearchComponent ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -74,6 +78,7 @@ const APP_CONTAINERS = [
     BreadcrumbModule,
     FooterModule,
     DropdownModule,
+    Drop,
     GridModule,
     HeaderModule,
     SidebarModule,
@@ -97,6 +102,8 @@ const APP_CONTAINERS = [
     FormsModule,
     HttpClientModule,
     SplitButtonModule,
+    CalendarModule,
+    ChipsModule,
     InputTextModule
   ],
   providers: [

@@ -38,6 +38,7 @@ export class DchequeTableComponent {
       { name: 'Frequency', value: 'frequency' }
     ];
   selectedSearchParameter: any;
+  primengConfig: any;
   filterTable(target: any, dataTable: any) {
     if (this.selectedSearchParameter) {
       dataTable.filter(target?.value, this.selectedSearchParameter.value, 'contains');
@@ -63,9 +64,20 @@ export class DchequeTableComponent {
   maxDate: Date;
 
   ngOnInit() {
-    this.getDcheques(this.role);
+    this.populateRoles();
+    this.getDcheques(this.roles);
     this.getCurrentDate();
-    this.primengConfig.ripple = true;
+  }
+
+  populateRoles(): void {
+    let index = 0;
+    let cond = localStorage.getItem('role_'+index);
+    while(cond) {
+      console.log("role_"+index+" = "+cond)
+      this.roles.push(cond);
+      index++;
+      cond = localStorage.getItem('role_'+index);
+    }
   }
 
   filterByDate(dataTable: any) {
@@ -96,10 +108,10 @@ export class DchequeTableComponent {
   }
 
   branchId: number = Number(localStorage.getItem('branchId'));
-  role: string = localStorage.getItem('role');
+  roles: string[] = [];
 
   constructor(private filterService: FilterService, private dchequeService: DchequeService, private branchService: BranchService, private router: Router, private confirmationService: ConfirmationService,
-    private messageService: MessageService, private primengConfig: PrimeNGConfig, private timeService: TimeService) { }
+    private messageService: MessageService, private timeService: TimeService) { }
 
   updateDcheques(id: number): void {
     this.getDcheque(id);
@@ -112,11 +124,11 @@ export class DchequeTableComponent {
 
     this.dchequeService.deleteDcheque(this.deleteId).subscribe(
       (response: void) => {
-        this.getDcheques(this.role);
+        this.getDcheques(this.roles);
       },
       (error: HttpErrorResponse) => {
         alert(error.message)
-        this.getDcheques(this.role);
+        this.getDcheques(this.roles);
       }
     );
 
@@ -139,8 +151,8 @@ export class DchequeTableComponent {
     });
   }
 
-  public getDcheques(role: string): void {
-    if (role == "ROLE_IC_ADMIN") {
+  public getDcheques(roles: string[]): void {
+    if (roles.indexOf("ROLE_IC_ADMIN") !== -1) {
       this.dchequeService.getDcheques().subscribe(
         (response: Dcheque[]) => {
           this.dcheques = response;
@@ -152,7 +164,7 @@ export class DchequeTableComponent {
         }
       );
     }
-    else if (role == "ROLE_BRANCH_IC" || role == "ROLE_BRANCH_MANAGER") {
+    else if (roles.indexOf("ROLE_BRANCH_IC") !== -1 || roles.indexOf("ROLE_BRANCH_MANAGER") !== -1) {
       this.dchequeService.getDchequeForBranch(this.branchId).subscribe(
         (response: Dcheque[]) => {
           this.dcheques = response;
@@ -164,7 +176,7 @@ export class DchequeTableComponent {
         }
       );
     }
-    else if (role == "ROLE_DISTRICT_IC") {
+    else if (roles.indexOf("ROLE_DISTRICT_IC") !== -1) {
       this.branchService.getBranch(this.branchId).subscribe(branch => {
         this.districtId = branch?.district?.id
       });
@@ -184,11 +196,11 @@ export class DchequeTableComponent {
   public deleteDcheque(): void {
     this.dchequeService.deleteDcheque(this.deleteId).subscribe(
       (response: void) => {
-        this.getDcheques(this.role);
+        this.getDcheques(this.roles);
       },
       (error: HttpErrorResponse) => {
         alert(error.message)
-        this.getDcheques(this.role);
+        this.getDcheques(this.roles);
       }
     );
   }

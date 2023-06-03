@@ -1,6 +1,40 @@
 <div *ngIf="newDiv">
   <form #addUserForm="ngForm" (ngSubmit)="addUser(addUserForm)" required>
     <div class="flex flex-wrap gap-3 mb-3">
+        <div class="flex-auto">
+            <label for="hex" class=" block mb-2"> Employee </label>
+              <p-dropdown [options]="employees" name="employee" [(ngModel)]="selectedEmployee" optionLabel="givenName" [filter]="true"  filterBy="givenName" [showClear]="true" placeholder="Select Employee"
+              class="w-full" styleClass="p-password" [style]="{'width':'630px','height':'45px'}"  [required]="true">
+              <ng-template pTemplate="selectedItem">
+                <div class="flex align-items-center gap-2" *ngIf="selectedEmployee">
+                    <div>{{ selectedEmployee.givenName + " " + selectedEmployee.fatherName + " " + selectedEmployee.grandFatherName }}</div>
+                </div>
+            </ng-template>
+                  <ng-template let-employee pTemplate="item">
+                      <div class="flex align-items-center gap-2">
+                          <div>{{ employee.givenName + " " + employee.fatherName + " " + employee.grandFatherName }}</div>
+                      </div>
+                  </ng-template>
+              </p-dropdown>
+        </div>
+        <div class="flex-auto">
+          <label for="hex" class=" block mb-2"> Branch </label>
+              <p-dropdown [options]="branches" name="branch" ngModel [(ngModel)]="selectedBranch" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select Branch"
+              class="w-full" styleClass="p-password" [style]="{'width':'630px','height':'45px'}"  [required]="true">
+          <ng-template pTemplate="selectedItem">
+              <div class="flex align-items-center gap-2" *ngIf="selectedBranch">
+                  <div>{{ selectedBranch.name }}</div>
+              </div>
+          </ng-template>
+          <ng-template let-branche pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                  <div>{{branche.name }}</div>
+              </div>
+          </ng-template>
+          </p-dropdown>
+        </div>
+    </div>
+    <div class="flex flex-wrap gap-3 mb-3">
       <div class="flex-auto">
           <label for="alphabetic" class=" block mb-2"> Username </label>
           <input pInputText pKeyFilter="alpha" id="alphabetic" ngModel name="username" [style]="{'width':'630px','height':'45px'}"  required minlength="3"/>
@@ -26,60 +60,10 @@
       </div>
     </div>
     <div class="flex flex-wrap gap-3 mb-3">
-        <div class="flex-auto">
-            <label for="hex" class=" block mb-2"> Employee </label>
-              <p-dropdown [options]="employees" name="employee" [(ngModel)]="selectedEmployee" optionLabel="givenName" [filter]="true"  filterBy="givenName" [showClear]="true" placeholder="Select Employee"
-              class="w-full" styleClass="p-password" [style]="{'width':'630px','height':'45px'}"  [required]="true">
-              <ng-template pTemplate="selectedItem">
-                <div class="flex align-items-center gap-2" *ngIf="selectedEmployee">
-                    <div>{{ selectedEmployee.givenName + " " + selectedEmployee.fatherName + " " + selectedEmployee.grandFatherName }}</div>
-                </div>
-            </ng-template>
-                  <ng-template let-employee pTemplate="item">
-                      <div class="flex align-items-center gap-2">
-                          <div>{{ employee.givenName + " " + employee.fatherName + " " + employee.grandFatherName }}</div>
-                      </div>
-                  </ng-template>
-              </p-dropdown>
-        </div>
-        <div class="flex-auto">
-            <label for="hex" class=" block mb-2"> Roles </label>
-                <p-dropdown [options]="roles" name="role" ngModel [(ngModel)]="selectedRole" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select Role"
-                class="w-full" styleClass="p-password" [style]="{'width':'630px','height':'45px'}"  [required]="true">
-            <ng-template pTemplate="selectedItem">
-                <div class="flex align-items-center gap-2" *ngIf="selectedRole">
-                    <div>{{ selectedRole.name }}</div>
-                </div>
-            </ng-template>
-            <ng-template let-rolee pTemplate="item">
-                <div class="flex align-items-center gap-2">
-                    <div>{{rolee.name }}</div>
-                </div>
-            </ng-template>
-            </p-dropdown>
-        </div>
-    </div>
-    <div class="flex flex-wrap gap-3 mb-3">
       <div class="flex-auto">
-        <label for="hex" class=" block mb-2"> Branch </label>
-            <p-dropdown [options]="branches" name="branch" ngModel [(ngModel)]="selectedBranch" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select Branch"
-            class="w-full" styleClass="p-password" [style]="{'width':'630px','height':'45px'}"  [required]="true">
-        <ng-template pTemplate="selectedItem">
-            <div class="flex align-items-center gap-2" *ngIf="selectedBranch">
-                <div>{{ selectedBranch.name }}</div>
-            </div>
-        </ng-template>
-        <ng-template let-branche pTemplate="item">
-            <div class="flex align-items-center gap-2">
-                <div>{{branche.name }}</div>
-            </div>
-        </ng-template>
-        </p-dropdown>
-    </div>
-      <div class="flex-auto">
-        <label for="alphabetic" class=" block mb-2"> Email </label>
-        <input pInputText id="alphanumeric" pKeyFilter="alphanum"  ngModel name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" [style]="{'width':'630px','height':'45px'}"  required minlength="10" />
-    </div>
+        <label for="hex" class=" block mb-2"> Select Module(s)</label>
+        <p-multiSelect [options]="modules" [(ngModel)]="selectedModules" defaultLabel="Select Module(s)" optionLabel="name" display="chip" class="custom-multiselect"></p-multiSelect>
+      </div>
     </div>
     <p-button label="Create User"  type="submit" [disabled]="addUserForm.invalid" class="createButton"></p-button>
   </form>
@@ -137,43 +121,15 @@
         </div>
         <div class="flex-auto">
             <label for="hex" class=" block mb-2"> Roles </label>
-                <p-dropdown [options]="roles" name="roles" ngModel [(ngModel)]="selectedRole" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select Role"
-                class="w-full" styleClass="p-password" [style]="{'width':'630px','height':'45px'}"  [required]="true">
-            <ng-template pTemplate="selectedItem">
-                <div class="flex align-items-center gap-2" *ngIf="selectedRole">
-                    <div>{{ selectedRole.name }}</div>
-                </div>
-            </ng-template>
-            <ng-template let-rolee pTemplate="item">
-                <div class="flex align-items-center gap-2">
-                    <div>{{rolee.name }}</div>
-                </div>
-            </ng-template>
-            </p-dropdown>
+            <p-multiSelect [options]="modules" [(ngModel)]="selectedModules" defaultLabel="Select Module(s)" optionLabel="name" display="chip" styleClass="custom-multiselect"></p-multiSelect>
         </div>
     </div>
-  <div class="flex flex-wrap gap-3 mb-3">
-    <div class="flex-auto">
-      <label for="hex" class=" block mb-2"> Branch </label>
-          <p-dropdown [options]="branches" name="branch" ngModel [(ngModel)]="selectedBranch" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select Branch"
-          class="w-full" styleClass="p-password" [style]="{'width':'630px','height':'45px'}"  [required]="true">
-      <ng-template pTemplate="selectedItem">
-          <div class="flex align-items-center gap-2" *ngIf="selectedBranch">
-              <div>{{ selectedBranch.name }}</div>
-          </div>
-      </ng-template>
-      <ng-template let-branche pTemplate="item">
-          <div class="flex align-items-center gap-2">
-              <div>{{branche.name }}</div>
-          </div>
-      </ng-template>
-      </p-dropdown>
+    <div class="flex flex-wrap gap-3 mb-3">
+      <div class="flex-auto">
+        <label for="hex" class=" block mb-2"> Select Module(s)</label>
+        <p-multiSelect [options]="modules" [(ngModel)]="selectedModules" defaultLabel="Select Module(s)" optionLabel="name" display="chip" styleClass="custom-multiselect"></p-multiSelect>
+      </div>
     </div>
-    <div class="flex-auto">
-      <label for="alphabetic" class=" block mb-2"> Email </label>
-      <input pInputText id="alphanumeric" pKeyFilter="alphanum"  ngModel name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" [style]="{'width':'630px','height':'45px'}"  required minlength="10" />
-    </div>
-  </div>
   <div class="flex flex-wrap gap-3 mb-3">
   <div class="flex-auto">
     <label for="hex" class=" block mb-2"> State </label>

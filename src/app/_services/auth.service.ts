@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, retry, throwError } from 'rxjs';
-import { JwtResponce } from '../models/JwtResponce';
+import { JwtResponse } from '../models/JwtResponse';
 
 interface LoginResponse {
   access_token: string;
@@ -46,10 +46,10 @@ export class AuthService {
 
 
   // Verify user credentials on server to get token
-  loginForm(data: any): Observable<JwtResponce> {
+  loginForm(data: any): Observable<JwtResponse> {
     localStorage.clear();
     return this.http
-      .post<JwtResponce>(this.basePath + '/auth/login', data, this.httpOptions)
+      .post<JwtResponse>(this.basePath + '/auth/login', data, this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -57,9 +57,9 @@ export class AuthService {
   }
 
   // After login save token and other values(if any) in localStorage
-  setUser(resp: JwtResponce) {
+  setUser(resp: JwtResponse) {
     const role = resp?.user?.roles[0]?.name;
-
+    console.log("rrrrrrrrole = "+ role)
     if (role == "ROLE_SUPER_ADMIN" ||
         role == "ROLE_IC_ADMIN" ||
         role =="ROLE_SASV_ADMIN" ||
@@ -76,39 +76,29 @@ export class AuthService {
 
     localStorage.clear();
     localStorage.setItem('email', resp?.user?.employee?.email);
-    for (let i = 0; i < resp?.accessTokens.length; i++) {
-      localStorage.setItem('access_token_' + (i+1), resp?.accessTokens[i].token);
-    }
-    localStorage.setItem('number_of_access_tokens', resp?.accessTokens.length.toString())
+    localStorage.setItem('access_token', resp?.accessToken);
     for (let i = 0; i < resp?.user?.roles.length; i++) {
       localStorage.setItem('role_' + i, resp?.user?.roles[i]?.name);
     }
     localStorage.setItem('number_of_roles', resp?.user?.roles.length.toString())
-    for (let i = 0; i < resp?.accessTokens?.length; i++) {
-      localStorage.setItem('moduleId_' + i, resp?.accessTokens[i].moduleId.toString());
-    }
+    localStorage.setItem('number_of_modules', resp?.user?.modules.length.toString())
     for (let i = 0; i < resp?.user?.modules.length; i++) {
       localStorage.setItem('module_' + i, resp?.user?.modules[i].status.toString());
     }
-    for (let i = 1; i <= resp?.accessTokens.length; i++) {
+    for (let i = 1; i <= resp?.user.modules.length + 1; i++) {
       if (i == 1) {
-        localStorage.setItem('url_1', "http://10.1.11.44:8083");
+        localStorage.setItem('url_1', this.basePath);
       } else {
-        for (let j = 0; j < resp?.user?.modules.length; j++) {
-          if (j+2 == resp?.user?.modules[i-2].id) {
-            localStorage.setItem('url_' + (j+2), resp?.user?.modules[i-2].url);
-          }
-        }
-
+        localStorage.setItem('url_' + (i), resp?.user?.modules[i-2].url);
       }
     }
+
     localStorage.setItem('name', resp?.user?.employee?.givenName + " " + resp?.user?.employee?.fatherName);
     localStorage.setItem('division', resp?.user?.employee?.division?.name);
     localStorage.setItem('branchId', resp?.user?.branch?.id.toString());
 
     console.log("email = " + localStorage.getItem('email'))
-    console.log("access_token_1 = " + localStorage.getItem('access_token_1'))
-    console.log("access_token_2 = " + localStorage.getItem('access_token_2'))
+    console.log("access_token = " + localStorage.getItem('access_token'))
     console.log("url_0 = " + localStorage.getItem('url_0'))
     console.log("url_1 = " + localStorage.getItem('url_1'))
     console.log("url_2 = " + localStorage.getItem('url_2'))
@@ -121,11 +111,11 @@ export class AuthService {
 
   // Checking if token is set
   isLoggedIn() {
-    return localStorage.getItem('access_token_1') != null;
+    return localStorage.getItem('access_token') != null;
   }
 
   getToken(i) {
-    return localStorage.getItem('access_token_' + i);
+    return localStorage.getItem('access_token');
   }
   // After clearing localStorage redirect to login screen
   logout() {

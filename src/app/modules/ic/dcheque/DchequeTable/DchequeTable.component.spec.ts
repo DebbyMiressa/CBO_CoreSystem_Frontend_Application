@@ -4,10 +4,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { AccordionModule, CardModule, GridModule } from '@coreui/angular';
 import { IconSetService } from '@coreui/icons-angular';
-import { iconSubset } from '../../../icons/icon-subset';
+import { iconSubset } from '../../../../icons/icon-subset';
 import { DchequeTableComponent } from './DchequeTable.component';
 
-describe('CIPMTableComponent', () => {
+describe('DchequeTableComponent', () => {
   let component: DchequeTableComponent;
   let fixture: ComponentFixture<DchequeTableComponent>;
   let iconSetService: IconSetService;

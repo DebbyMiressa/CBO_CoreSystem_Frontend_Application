@@ -17,8 +17,8 @@ export class DefaultLayoutComponent {
 
   constructor() {
     this.navItems.push(navItemMenu);
-    const totalAccessTokens = Number(localStorage.getItem('number_of_access_tokens'))
-    for (let i = 0; i < totalAccessTokens; i++) {
+    const totalModules = Number(localStorage.getItem('number_of_modules')) + 1;
+    for (let i = 0; i <= totalModules; i++) {
       //if (localStorage.getItem("module_" + i) == "true") {
         console.log("i = " + i);
         switch (localStorage.getItem("role_" + i)) {
@@ -40,7 +40,7 @@ export class DefaultLayoutComponent {
           case "ROLE_SASV_ADMIN":
             this.navItems.push(navItemsSASVAdmin);
             break;
-            case "ROLE_SASV_ADMIN":
+          case "ROLE_SASV_VIEW":
             this.navItems.push(navItemsSASVView);
             break;
           case "ROLE_SANCTION_ADMIN":

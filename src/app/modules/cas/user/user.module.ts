@@ -25,7 +25,7 @@ import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AnimateModule } from 'primeng/animate';
 import { DropdownModule } from 'primeng/dropdown';
-
+import { MultiSelectModule } from 'primeng/multiselect';
 
 
 // CoreUI Modules
@@ -89,7 +89,8 @@ import {
     CardModule,
     BlockUIModule,
     ProgressSpinnerModule,
-    AnimateModule
+    AnimateModule,
+    MultiSelectModule
   ],
   declarations: [
     NewUserComponent,
