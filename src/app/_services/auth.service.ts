@@ -89,7 +89,7 @@ export class AuthService {
       if (i == 1) {
         localStorage.setItem('url_1', this.basePath);
       } else {
-        localStorage.setItem('url_' + (i), resp?.user?.modules[i-2].url);
+        localStorage.setItem('url_' + (resp?.user?.modules[i-2].id), resp?.user?.modules[i-2].url);
       }
     }
 

@@ -16,11 +16,6 @@ import { AdverserResponseDetail } from '../../../models/sanction-models/adverser
 import { NbeBlackList } from '../../../models/sanction-models/nbeblacklist/NbeBlackList';
 import { combineLatest, combineLatestAll, combineLatestWith, filter, forkJoin } from 'rxjs';
 
-
-
-
-
-
 @Component({
   selector: 'app-accordions',
   templateUrl: './sanctionTable.component.html',
@@ -45,7 +40,7 @@ export class SanctionTableComponent {
 
   }
   BasicShow: boolean = false;
-  
+
   showDialog() {
       this.BasicShow = true;
   }
@@ -93,7 +88,7 @@ combineLatestWith([
 
       this.dataUnSanctionChecker = 1;
       this.sanctionData = [...Array(Object.keys(data).length).keys()]
-     
+
       console.log("Data UN List", this.unSanctionList[0].fullName);
       console.log("UN Data Length: ", this.dataUnSanctionChecker)
     } else {
@@ -174,7 +169,7 @@ combineLatestWith([
           console.log("Data UK List", this.nameList);
         } else {
           this.dataUkChecker = 0;
-  
+
           console.log("Data From UK Is Not Found");
         }
       }, (error:HttpErrorResponse) => {
@@ -183,18 +178,18 @@ combineLatestWith([
       }
       ),
             // UNited Nation Individual Search
-          
+
             this.sanctionListService.getUNIndividualSearchResult(searchResult).subscribe(data=>{
-       
+
               this.unIndividualResponseDetailList = data;
-           
+
               if (this.unIndividualResponseDetailList?.length > 0) {
                 this.dataUnIndividualChecker = 1;
                 console.log("UN Individual Data Length: ", this.dataUnIndividualChecker)
                 console.log("Data UN Individual List", this.unIndividualResponseDetailList);
               } else {
                 this.dataUnIndividualChecker = 0;
-        
+
                 console.log("Data From UN Is Not Found");
               }
             },
@@ -207,7 +202,7 @@ combineLatestWith([
               this.dataUnIndividualChecker=-1;
              }, ()=>{
       console.log("United Nation: Done");
-      
+
              }),
       //Politically Exposed People
       this.sanctionListService.getPEPSearchResult(searchResult).subscribe(data=>{
@@ -218,7 +213,7 @@ combineLatestWith([
           console.log("Data PEP List", this.pepResponseDetailList);
         } else {
           this.dataPepChecker = 0;
-  
+
           console.log("Data From PEP Is Not Found");
         }
       }, (error:HttpErrorResponse) => {
@@ -246,7 +241,7 @@ combineLatestWith([
       this.nameList = data[1];
       this.pepResponseDetailList = data[2];
       this.unIndividualResponseDetailList = data[3];
-    
+
       if (this.unIndividualResponseDetailList?.length > 0) {
         this.dataUnIndividualChecker = 1;
         console.log("UN Individual Data Length: ", this.dataUnIndividualChecker)
@@ -308,7 +303,7 @@ combineLatestWith([
   }
   public getCustomerUkDetail(Id: any) {
     console.log("Id In CustomerDetail: ", Id);
- 
+
     console.log("Id from Arg: ", Id as string)
     this.sanctionListService.userUkDetail(Id).subscribe(data => {
 
@@ -338,7 +333,7 @@ combineLatestWith([
   }
   public getUnIndividualCustomerDetail(Id: any){
     console.log("Id in UN CustomerDetail: ", Id);
-  
+
     console.log("Id from Arg: ", Id as string)
     this.sanctionListService.userUnIndividualDetail(Id).subscribe(data => {
       this.unIndividualResponses = data;
@@ -352,11 +347,11 @@ combineLatestWith([
 
   public getUnSanction(Id: any){
     console.log("Id in UN CustomerDetail: ", Id);
- 
+
     console.log("Id from Arg: ", Id as string)
     this.sanctionListService.unSanctionDetail(Id).subscribe(data => {
       this.unSanctionList = data;
-   
+
       console.log("UN Individual IN Details: ", this.unSanction)
       console.log("Id from Arg After call: ", Id)
       this.detailRetrieved = true;

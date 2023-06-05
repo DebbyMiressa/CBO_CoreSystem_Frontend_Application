@@ -1,9 +1,9 @@
 <form  #searchForm ="ngForm">
 	<span class="p-input-icon-left" [style]="{'width' : '100%'}">
 		<i  [style]="{  'margin-left': '19px', 'padding-right': '99px'}"  class="pi pi-search "></i>
-		<input  [(ngModel)]="fullName"  name="fullName"  type="search" (input)="getSearchResult(searchForm.value.fullName)"  [style]="{'width':'100%','margin':'10px', 'padding':'25px', 'text-indent': '20px'}"  type="text" pInputText class="p-inputtext-lg" />
+		<input name="fullName" [ngModel]="fullName" type="search" (input)="getSearchResult(searchForm.value.fullName)"  [style]="{'width':'100%','margin':'10px', 'padding':'25px', 'text-indent': '20px'}"  type="text" pInputText class="p-inputtext-lg" />
 	</span>
-	
+
 </form>
 
 
@@ -11,18 +11,18 @@
 	<h3 style="color: green">Record in UN Sanction List</h3>
 
 
-	<p-table [value]="unIndividualResponseDetailList"  [paginator]="true"  [rows]="5 "   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	> 
+	<p-table [value]="unIndividualResponseDetailList"  [paginator]="true"  [rows]="5 "   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
 		<ng-template pTemplate="header">
 			<tr>
-				<th>Full Name</th>
-				<th>Id</th>
-			
+				<th scope="col">Full Name</th>
+				<th scope="col">Id</th>
+
 			</tr>
 		</ng-template>
 		<ng-template pTemplate="body"  let-unIndividualResponseDetail   *ngFor="let unIndividualResponseDetail of unIndividualResponseDetailList">
-			<tr ><td ><span *ngIf="unIndividualResponseDetail.firstName !== null">{{  unIndividualResponseDetail?.firstName +"   " }}</span> 
-				<span *ngIf="unIndividualResponseDetail.secondName !== null">{{unIndividualResponseDetail?.secondName +"   "}}</span> 
-				<span *ngIf="unIndividualResponseDetail.thirdName !== null">{{unIndividualResponseDetail?.thirdName+"   " }}</span> 
+			<tr ><td ><span *ngIf="unIndividualResponseDetail.firstName !== null">{{  unIndividualResponseDetail?.firstName +"   " }}</span>
+				<span *ngIf="unIndividualResponseDetail.secondName !== null">{{unIndividualResponseDetail?.secondName +"   "}}</span>
+				<span *ngIf="unIndividualResponseDetail.thirdName !== null">{{unIndividualResponseDetail?.thirdName+"   " }}</span>
 				<span *ngIf="unIndividualResponseDetail.fourthName !== null">{{unIndividualResponseDetail?.fourthName +"   "}}</span> </td>
 
 				<td>{{unIndividualResponseDetail?.id}}</td>
@@ -36,17 +36,17 @@
 	<h3 style="color: green">Record in UK Sanction List</h3>
 
 
-	<p-table [value]="nameList"  [paginator]="true"  [rows]="5 "   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	> 
+	<p-table [value]="nameList"  [paginator]="true"  [rows]="5 "   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
 		<ng-template pTemplate="header">
 			<tr>
-				<th>Full Name</th>
-				<th>Id</th>
-			
+				<th scope="col">Full Name</th>
+				<th scope="col">Id</th>
+
 			</tr>
 		</ng-template>
 		<ng-template pTemplate="body"  let-name  *ngFor="let name of nameList">
 			<tr ><td> <span *ngIf="name.name1 !== null">{{  name?.name1 +"   " }}</span>
-				<span *ngIf="name.name2 !== null">{{  name?.name2 +"   " }}</span> 
+				<span *ngIf="name.name2 !== null">{{  name?.name2 +"   " }}</span>
 				<span *ngIf="name.name3 !== null">{{  name?.name3 +"   " }}</span>
 				<span *ngIf="name.name4 !== null">{{  name?.name4 +"   " }}</span>
 				<span *ngIf="name.name5 !== null">{{  name?.name5 +"   " }}</span>
@@ -63,12 +63,12 @@
 	<h3 style="color: green">Record in EU Sanction List</h3>
 
 
-	<p-table [value]="nameAliasList"  [paginator]="true"  [rows]="5"   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	> 
+	<p-table [value]="nameAliasList"  [paginator]="true"  [rows]="5"   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
 		<ng-template pTemplate="header">
 			<tr>
-				<th>Full Name</th>
-				<th>Id</th>
-			
+				<th scope="col">Full Name</th>
+				<th scope="col">Id</th>
+
 			</tr>
 		</ng-template>
 		<ng-template pTemplate="body"  let-data >
@@ -84,12 +84,12 @@
 	<h3 style="color: green">Record in Media Adversery Sanction List</h3>
 
 
-	<p-table [value]="adverserResponseDetailList"  [paginator]="true"  [rows]="5"   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	> 
+	<p-table [value]="adverserResponseDetailList"  [paginator]="true"  [rows]="5"   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
 		<ng-template pTemplate="header">
 			<tr>
-				<th>Full Name</th>
-				<th>Id</th>
-			
+				<th scope="col">Full Name</th>
+				<th scope="col">Id</th>
+
 			</tr>
 		</ng-template>
 		<ng-template pTemplate="body"  let-data>
@@ -106,12 +106,12 @@
 	<h3 style="color: green">Record in Politically Exposed People Sanction List</h3>
 
 
-	<p-table [value]="pepResponseDetailList"  [paginator]="true"  [rows]="5"   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	> 
+	<p-table [value]="pepResponseDetailList"  [paginator]="true"  [rows]="5"   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
 		<ng-template pTemplate="header">
 			<tr>
-				<th>Full Name</th>
-				<th>Id</th>
-			
+				<th scope="col">Full Name</th>
+				<th scope="col">Id</th>
+
 			</tr>
 		</ng-template>
 		<ng-template pTemplate="body"  let-data>
@@ -130,12 +130,12 @@
 	<h3 style="color: green">Record in National NBE Sanction List</h3>
 
 
-	<p-table [value]="nbeBlackListList"  [paginator]="true"  [rows]="9 "   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	> 
+	<p-table [value]="nbeBlackListList"  [paginator]="true"  [rows]="9 "   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
 		<ng-template pTemplate="header">
 			<tr>
 				<th>Full Name</th>
 				<th>Id</th>
-			
+
 			</tr>
 		</ng-template>
 		<ng-template pTemplate="body"  let-data>
