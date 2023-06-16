@@ -1,6 +1,7 @@
 import { Division } from "./division";
 
 export interface JwtResponse {
+    employee: any;
     user: {
         id: number,
         username: string;

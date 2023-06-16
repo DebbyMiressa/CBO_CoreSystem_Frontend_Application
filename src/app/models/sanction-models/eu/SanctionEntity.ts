@@ -10,7 +10,7 @@ export interface SanctionEntity {
     Id: string;
     designationDetails: string;
     address: Address;
-    unitedNationId: string;
+    unitedNationId: string;z
     logicalId: string;
     remark: string;
     regulation: Regulation;

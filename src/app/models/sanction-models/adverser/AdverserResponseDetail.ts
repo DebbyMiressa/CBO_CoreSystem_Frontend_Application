@@ -1,5 +1,5 @@
 export interface AdverserResponseDetail{
-id: number;
+     id: number;
      name: string;
      position: string;
 }

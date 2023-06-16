@@ -1,4 +1,4 @@
-import { NameAlias } from "./NameAlias";
+import { NameAlias } from "./namealias";
 
 export interface NameAliasData{
      nameAliasList: NameAlias[];

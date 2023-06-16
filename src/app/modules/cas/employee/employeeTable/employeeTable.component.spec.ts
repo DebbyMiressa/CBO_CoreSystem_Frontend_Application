@@ -6,7 +6,7 @@ import { AccordionModule, CardModule, GridModule } from '@coreui/angular';
 import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { DocsComponentsModule } from '../../../../components';
-import { EmployeeTableComponent } from './employeeTable.component';
+import { EmployeeTableComponent } from './employeetable.component';
 
 describe('TableComponent', () => {
   let component: EmployeeTableComponent;

@@ -11,8 +11,8 @@ import { BranchP } from '../../../../models/branchP';
 
 @Component({
   selector: 'app-accordions',
-  templateUrl: './newBranch.component.html',
-  styleUrls: ['./newBranch.component.scss']
+  templateUrl: './newbranch.component.html',
+  styleUrls: ['./newbranch.component.scss']
 })
 export class NewBranchComponent {
 

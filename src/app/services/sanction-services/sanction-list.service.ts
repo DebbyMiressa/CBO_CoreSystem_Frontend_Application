@@ -11,8 +11,13 @@ import { Name } from '../../models/sanction-models/uk/Name';
 import { ResponseDetail } from '../../models/sanction-models/uk/ResponseDetail';
 import { PepResponseDetail } from '../../models/sanction-models/pep/PepResponseDetail';
 import { UnIndividualResponseDetail } from '../../models/sanction-models/un/UnIndividualResponse';
-import { AdverserResponseDetail } from '../../models/sanction-models//adverser/AdverserResponseDetail';
+import { AdverserResponseDetail } from '../../models/sanction-models/adverser/AdverserResponseDetail';
 import { NbeBlackList } from '../../models/sanction-models/nbeblacklist/NbeBlackList';
+import { UNindividual_ } from '../../models/sanction-models/UNindividual_';
+import { UNentity_ } from 'src/app/models/sanction-models/UNentity_';
+import { EU_ } from 'src/app/models/sanction-models/EU_';
+import { UK_ } from 'src/app/models/sanction-models/UK_';
+import { OFAC_ } from 'src/app/models/sanction-models/OFAC_';
 
 
 
@@ -32,6 +37,7 @@ export class SanctionListService {
   private baseEUURL;
   private baseAdverserURL;
   private baseNbeBlackList;
+
 
   private init() {
     this.httpOptions = {
@@ -54,6 +60,39 @@ export class SanctionListService {
   }
 
   constructor(private httpClient: HttpClient) { }
+
+  //abdydidit 
+  //get all UN individuals
+  getAllUnIndividual():Observable<UNindividual_[]>{
+    return this.httpClient.get<UNindividual_[]>('http://10.1.125.58:8084/api/v1/un_all_individuals');
+  }
+
+  getAllUnEntity():Observable<UNentity_[]>{
+    return this.httpClient.get<UNentity_[]>('http://10.1.125.58:8084/api/v1/un_all_entities');
+  }
+   getAllEu():Observable<EU_[]>{
+    return this.httpClient.get<EU_[]>('http://10.1.125.58:8084/api/v1/eu_all');
+   }
+
+   getAllUk():Observable<UK_[]>{
+    return this.httpClient.get<UK_[]>('http://10.1.125.58:8084/api/v1/uk_all');
+   }
+
+   getAllNbe():Observable<NbeBlackList[]>{
+    return this.httpClient.get<NbeBlackList[]>('http://10.1.125.58:8084/api/v1/nbebacklist');
+   }
+
+   getAllPep():Observable<PepResponseDetail[]>{
+    return this.httpClient.get<PepResponseDetail[]>('http://10.1.125.58:8084/api/v1/pep-list');
+   }
+   getAllAdverser(): Observable<AdverserResponseDetail[]>{
+    return this.httpClient.get<AdverserResponseDetail[]>('http://10.1.125.58:8084/api/v1/adverser-all');
+   }
+   getAllOfac(): Observable<OFAC_[]>{
+    return this.httpClient.get<OFAC_[]>('http://10.1.125.58:8084/api/v1/ofac-sanctions');
+   }
+
+  //abdydiditends
 
   getEUSearchResult(fullName: string): Observable<any>{
     this.init();

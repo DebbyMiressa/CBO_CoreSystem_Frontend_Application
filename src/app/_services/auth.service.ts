@@ -17,7 +17,7 @@ interface LoginResponse {
 export class AuthService {
 
   // API path
-  basePath = 'http://10.1.11.44:8083';
+  basePath = 'http://10.1.125.58:8082';
 
   constructor(
     private router: Router,

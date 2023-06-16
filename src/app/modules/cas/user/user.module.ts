@@ -9,8 +9,8 @@ import { ToastModule } from 'primeng/toast';
 
 
 import { FormModule } from '@coreui/angular';
-import { NewUserComponent } from './newUser/newUser.component';
-import { UserTableComponent } from './userTable/userTable.component';
+import { NewUserComponent } from './newuser/newuser.component';
+import { UserTableComponent } from './usertable/usertable.component';
 import { UserRoutingModule } from './user-routing.module';
 import { IconModule } from '@coreui/icons-angular';
 

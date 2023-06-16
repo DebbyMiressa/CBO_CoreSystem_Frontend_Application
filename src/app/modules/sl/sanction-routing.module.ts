@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SanctionTableComponent } from './SanctionTable/SanctionTable.component';
+import { SanctionTableComponent } from './sanctiontable/sanctiontable.component';
 
 
 const routes: Routes = [

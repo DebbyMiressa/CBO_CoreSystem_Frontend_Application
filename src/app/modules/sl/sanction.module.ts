@@ -7,7 +7,7 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 
 import { FormModule } from '@coreui/angular';
-import { SanctionTableComponent } from './SanctionTable/SanctionTable.component';
+import { SanctionTableComponent } from './sanctiontable/sanctiontable.component';
 import { SanctionRoutingModule } from './sanction-routing.module';
 import { IconModule } from '@coreui/icons-angular';
 
@@ -23,6 +23,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AnimateModule } from 'primeng/animate';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule} from 'primeng/calendar';
+import { DialogModule } from 'primeng/dialog';
 
 
 
@@ -69,6 +70,7 @@ import {
     SpinnerModule,
     TabsModule,
     NavModule,
+    DialogModule,
     TooltipModule,
     CarouselModule,
     FormModule,

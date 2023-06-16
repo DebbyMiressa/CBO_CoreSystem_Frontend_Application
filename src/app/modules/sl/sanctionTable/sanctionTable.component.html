@@ -7,130 +7,204 @@
 </form>
 
 
-<div style="text-align: center" *ngIf="dataUnIndividualChecker == 1">
-	<h3 style="color: green">Record in UN Sanction List</h3>
+<div style="text-align: center" *ngIf="asro_all_un_individual != null && asro_all_un_individual.length != 0 ">
+	<h3 style="color: green">Record in UN Individual Sanction List</h3>
 
 
-	<p-table [value]="unIndividualResponseDetailList"  [paginator]="true"  [rows]="5 "   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
+	<p-table [value]="asro_all_un_individual"  [paginator]="true"  [rows]="5 "   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
 		<ng-template pTemplate="header">
 			<tr>
 				<th scope="col">Full Name</th>
-				<th scope="col">Id</th>
+				<th scope="col">More Info</th>
 
 			</tr>
 		</ng-template>
-		<ng-template pTemplate="body"  let-unIndividualResponseDetail   *ngFor="let unIndividualResponseDetail of unIndividualResponseDetailList">
-			<tr ><td ><span *ngIf="unIndividualResponseDetail.firstName !== null">{{  unIndividualResponseDetail?.firstName +"   " }}</span>
-				<span *ngIf="unIndividualResponseDetail.secondName !== null">{{unIndividualResponseDetail?.secondName +"   "}}</span>
-				<span *ngIf="unIndividualResponseDetail.thirdName !== null">{{unIndividualResponseDetail?.thirdName+"   " }}</span>
-				<span *ngIf="unIndividualResponseDetail.fourthName !== null">{{unIndividualResponseDetail?.fourthName +"   "}}</span> </td>
+		<ng-template pTemplate="body"  let-data   *ngFor="let data of asro_all_un_individual">
+			<tr ><td ><span *ngIf="data.firstName !== null">{{  data?.firstName +"   " }}</span>
+				<span *ngIf="data.secondName !== null">{{data?.secondName +"   "}}</span>
+				<span *ngIf="data.thirdName !== null">{{data?.thirdName+"   " }}</span>
+				<span *ngIf="data.fourthName !== null">{{data?.fourthName +"   "}}</span> </td>
 
-				<td>{{unIndividualResponseDetail?.id}}</td>
+			
+				 <td><p-button label="More Info" (onClick)="showDialog(data)"></p-button></td>
 			</tr>
 		</ng-template>
 	</p-table>
+	<p-dialog header="More Information" [(visible)]="displayDialog">
+		<p-table [value]="selectedDataProperties">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Property</th>
+					<th>Value</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-data>
+				<tr>
+					<td>{{data.property}}</td>
+					<td>
+						<ng-container *ngIf="isObject(data.value); else notObject">
+							{{data.value | json}}
+						</ng-container>
+						<ng-template #notObject>{{data.value}}</ng-template>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</p-dialog>
 
 </div>
 
-<div style="text-align: center" *ngIf="dataUkChecker == 1">
-	<h3 style="color: green">Record in UK Sanction List</h3>
+
+<div style="text-align: center"  *ngIf="asro_all_un_entities != null && asro_all_un_entities.length != 0">
+	<h3 style="color: green">Record in UN Entity Sanction List</h3>
 
 
-	<p-table [value]="nameList"  [paginator]="true"  [rows]="5 "   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
+	<p-table [value]="asro_all_un_entities"  [paginator]="true"  [rows]="5 "   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
 		<ng-template pTemplate="header">
 			<tr>
 				<th scope="col">Full Name</th>
-				<th scope="col">Id</th>
+				<th scope="col">More Info</th>
 
 			</tr>
 		</ng-template>
-		<ng-template pTemplate="body"  let-name  *ngFor="let name of nameList">
-			<tr ><td> <span *ngIf="name.name1 !== null">{{  name?.name1 +"   " }}</span>
-				<span *ngIf="name.name2 !== null">{{  name?.name2 +"   " }}</span>
-				<span *ngIf="name.name3 !== null">{{  name?.name3 +"   " }}</span>
-				<span *ngIf="name.name4 !== null">{{  name?.name4 +"   " }}</span>
-				<span *ngIf="name.name5 !== null">{{  name?.name5 +"   " }}</span>
-				<span *ngIf="name.name6 !== null">{{  name?.name6 +"   " }}</span></td>
+		<ng-template pTemplate="body"   let-data   *ngFor="let data of asro_all_un_entities">
+			<tr ><td ><span *ngIf="data.firstName !== null">{{  data?.firstName +"   " }}</span>
+				<span *ngIf="data.secondName !== null">{{data?.secondName +"   "}}</span>
+				<span *ngIf="data.thirdName !== null">{{data?.thirdName+"   " }}</span>
+				</td>
 
-				<td>{{name?.id}}</td>
+	
+				 <td><p-button label="More Info" (onClick)="showDialog(data)"></p-button></td>
 			</tr>
 		</ng-template>
 	</p-table>
+	<p-dialog header="More Information" [(visible)]="displayDialog">
+		<p-table [value]="selectedDataProperties">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Property</th>
+					<th>Value</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-data>
+				<tr>
+					<td>{{data.property}}</td>
+					<td>
+						<ng-container *ngIf="isObject(data.value); else notObject">
+							{{data.value | json}}
+						</ng-container>
+						<ng-template #notObject>{{data.value}}</ng-template>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</p-dialog>
 
 </div>
 
-<div style="text-align: center" *ngIf="dataEuChecker == 1">
+<div style="text-align: center" *ngIf="asro_all_eu_sanction != null && asro_all_eu_sanction.length != 0">
 	<h3 style="color: green">Record in EU Sanction List</h3>
 
 
-	<p-table [value]="nameAliasList"  [paginator]="true"  [rows]="5"   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
+	<p-table [value]="asro_all_eu_sanction"  [paginator]="true"  [rows]="5 "   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
 		<ng-template pTemplate="header">
 			<tr>
 				<th scope="col">Full Name</th>
-				<th scope="col">Id</th>
+				<th scope="col">More Info</th>
 
 			</tr>
 		</ng-template>
-		<ng-template pTemplate="body"  let-data >
-			<tr ><td>{{data?.wholeName }}</td>
+		<ng-template pTemplate="body"   let-data   *ngFor="let data of asro_all_eu_sanction">
+		<tr >
+			<td> 
+				<ng-container *ngFor="let alias of data.nameAlias">
+					<span *ngIf="alias.wholeName !== null">{{ alias.wholeName+"   " }}</span>
+				</ng-container>
+				
+			</td>
 
-				<td>{{data?.id}}</td>
+				 <td><p-button label="More Info" (onClick)="showDialog(data)"></p-button></td>
 			</tr>
 		</ng-template>
 	</p-table>
+	<p-dialog header="More Information" [(visible)]="displayDialog">
+		<p-table [value]="selectedDataProperties">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Property</th>
+					<th>Value</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-data>
+				<tr>
+					<td>{{data.property}}</td>
+					<td>
+						<ng-container *ngIf="isObject(data.value); else notObject">
+							{{data.value | json}}
+						</ng-container>
+						<ng-template #notObject>{{data.value}}</ng-template>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</p-dialog>
 
 </div>
-<div style="text-align: center" *ngIf="dataAdverserChecker == 1">
-	<h3 style="color: green">Record in Media Adversery Sanction List</h3>
+
+<div style="text-align: center"  *ngIf="asro_all_uk_sanction != null && asro_all_uk_sanction.length != 0">
+	<h3 style="color: green">Record in UK Sanction List</h3>
 
 
-	<p-table [value]="adverserResponseDetailList"  [paginator]="true"  [rows]="5"   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
+	<p-table [value]="asro_all_uk_sanction"  [paginator]="true"  [rows]="5"   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
 		<ng-template pTemplate="header">
 			<tr>
 				<th scope="col">Full Name</th>
-				<th scope="col">Id</th>
+				<th scope="col">More Info</th>
 
 			</tr>
 		</ng-template>
-		<ng-template pTemplate="body"  let-data>
-			<tr ><td>{{data?.name}}</td>
+		<ng-template pTemplate="body"   let-data   *ngFor="let data of asro_all_uk_sanction" >
+			<tr ><td>
+				<ng-container *ngFor="let name of data.names.nameList">
+					<span>
+						{{ [name.name1, name.name2, name.name3, name.name4, name.name5, name.name6].join(' ') }}
+					</span>
+				</ng-container>
+			</td>
 
-				<td>{{data?.id}}</td>
-			</tr>
-		</ng-template>
-	</p-table>
-
-</div>
-
-<div style="text-align: center" *ngIf="dataPepChecker == 1">
-	<h3 style="color: green">Record in Politically Exposed People Sanction List</h3>
-
-
-	<p-table [value]="pepResponseDetailList"  [paginator]="true"  [rows]="5"   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
-		<ng-template pTemplate="header">
-			<tr>
-				<th scope="col">Full Name</th>
-				<th scope="col">Id</th>
-
-			</tr>
-		</ng-template>
-		<ng-template pTemplate="body"  let-data>
-			<tr ><td>{{data?.nameInEng}}</td>
-
-				<td>{{data?.id}}</td>
+			 <td><p-button label="More Info" (onClick)="showDialog(data)"></p-button></td>
 			</tr>
 		</ng-template>
 	</p-table>
+	<p-dialog header="More Information" [(visible)]="displayDialog">
+		<p-table [value]="selectedDataProperties">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Property</th>
+					<th>Value</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-data>
+				<tr>
+					<td>{{data.property}}</td>
+					<td>
+						<ng-container *ngIf="isObject(data.value); else notObject">
+							{{data.value | json}}
+						</ng-container>
+						<ng-template #notObject>{{data.value}}</ng-template>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</p-dialog>
 
 </div>
 
-
-
-<div style="text-align: center" *ngIf="dataNbeChecker == 1">
+<div style="text-align: center" *ngIf="asro_all_nbe_sanction != null && asro_all_nbe_sanction.length != 0">
 	<h3 style="color: green">Record in National NBE Sanction List</h3>
 
 
-	<p-table [value]="nbeBlackListList"  [paginator]="true"  [rows]="9 "   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
+	<p-table [value]="asro_all_nbe_sanction"  [paginator]="true"  [rows]="9 "   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
 		<ng-template pTemplate="header">
 			<tr>
 				<th>Full Name</th>
@@ -138,14 +212,172 @@
 
 			</tr>
 		</ng-template>
-		<ng-template pTemplate="body"  let-data>
+		<ng-template pTemplate="body"  let-data >
 			<tr ><td>{{data?.name  }}</td>
-				<td>{{data?.id}}</td>
+			
+				 <td><p-button label="More Info" (onClick)="showDialog(data)"></p-button></td>
 			</tr>
 		</ng-template>
 	</p-table>
+	<p-dialog header="More Information" [(visible)]="displayDialog">
+		<p-table [value]="selectedDataProperties">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Property</th>
+					<th>Value</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-data>
+				<tr>
+					<td>{{data.property}}</td>
+					<td>
+						<ng-container *ngIf="isObject(data.value); else notObject">
+							{{data.value | json}}
+						</ng-container>
+						<ng-template #notObject>{{data.value}}</ng-template>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</p-dialog>
 
 </div>
+<div style="text-align: center" *ngIf="asro_all_adverser_sanction != null && asro_all_adverser_sanction.length != 0">
+	<h3 style="color: green">Record in Media Adversery Sanction List</h3>
+
+
+	<p-table [value]="asro_all_adverser_sanction"  [paginator]="true"  [rows]="5"   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
+		<ng-template pTemplate="header">
+			<tr>
+				<th scope="col">Full Name</th>
+				<th scope="col">More Info</th>
+
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body"  let-data>
+			<tr ><td>{{data?.name}}</td>
+
+			
+				 <td><p-button label="More Info" (onClick)="showDialog(data)"></p-button></td>
+			</tr>
+		</ng-template>
+	</p-table>
+	<p-dialog header="More Information" [(visible)]="displayDialog">
+		<p-table [value]="selectedDataProperties">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Property</th>
+					<th>Value</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-data>
+				<tr>
+					<td>{{data.property}}</td>
+					<td>
+						<ng-container *ngIf="isObject(data.value); else notObject">
+							{{data.value | json}}
+						</ng-container>
+						<ng-template #notObject>{{data.value}}</ng-template>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</p-dialog>
+
+</div>
+
+<div style="text-align: center" *ngIf="asro_all_ofac_sanction != null && asro_all_ofac_sanction .length != 0">
+	<h3 style="color: green">Record in OFAC Sanction List</h3>
+
+
+	<p-table [value]="asro_all_ofac_sanction "  [paginator]="true"  [rows]="5"   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
+		<ng-template pTemplate="header">
+			<tr>
+				<th scope="col">Full Name </th>
+				<th scope="col">More Info</th>
+
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body"  let-data>
+			<tr ><td>{{data?.name}}</td>
+
+		
+				 <td><p-button label="More Info" styleClass="small-button"  (onClick)="showDialog(data)"></p-button></td>
+			</tr>
+		</ng-template>
+	</p-table>
+	
+	<p-dialog header="More Information" [(visible)]="displayDialog">
+		<p-table [value]="selectedDataProperties">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Property</th>
+					<th>Value</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-data>
+				<tr>
+					<td>{{data.property}}</td>
+					<td>
+						<ng-container *ngIf="isObject(data.value); else notObject">
+							{{data.value | json}}
+						</ng-container>
+						<ng-template #notObject>{{data.value}}</ng-template>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</p-dialog>
+
+</div>
+
+
+<div style="text-align: center" *ngIf="asro_all_pep_sanction != null && asro_all_pep_sanction .length != 0">
+	<h3 style="color: green">Record in Politically Exposed People Sanction List</h3>
+
+
+	<p-table [value]="asro_all_pep_sanction "  [paginator]="true"  [rows]="5"   [showCurrentPageReport]="true"   [tableStyle]="{ 'min-width': '50rem' }"   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"   [rowsPerPageOptions]="[5, 25, 50]"	>
+		<ng-template pTemplate="header">
+			<tr>
+				<th scope="col">Full Name </th>
+				<th scope="col">More Info</th>
+
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body"  let-data>
+			<tr ><td>{{ [data.nameInEng, data.nameInAmh].join(' ') }}</td>
+
+		
+				 <td><p-button label="More Info" styleClass="small-button"  (onClick)="showDialog(data)"></p-button></td>
+			</tr>
+		</ng-template>
+	</p-table>
+	
+	<p-dialog header="More Information" [(visible)]="displayDialog">
+		<p-table [value]="selectedDataProperties">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Property</th>
+					<th>Value</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-data>
+				<tr>
+					<td>{{data.property}}</td>
+					<td>
+						<ng-container *ngIf="isObject(data.value); else notObject">
+							{{data.value | json}}
+						</ng-container>
+						<ng-template #notObject>{{data.value}}</ng-template>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</p-dialog>
+
+</div>
+
+
 
 
 

@@ -1,5 +1,13 @@
+//prioritize these tasks and identify things you should do prior to server configuration and after that. basic funtionality is done before server configuration
+//things to add
+//at first loads all data but while it does that instead of making users wait let them search 
+//have easy way of getting from back end that goes with my models
+//also check and if document have name in other language enable them to search by that
+//try ai
+//show details 
+
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, FilterService, Message, MessageService, PrimeNGConfig, SortEvent } from 'primeng/api';
 import * as XLSX from 'xlsx';
@@ -15,15 +23,59 @@ import { UnIndividualResponseDetail } from '../../../models/sanction-models/un/U
 import { AdverserResponseDetail } from '../../../models/sanction-models/adverser/AdverserResponseDetail';
 import { NbeBlackList } from '../../../models/sanction-models/nbeblacklist/NbeBlackList';
 import { combineLatest, combineLatestAll, combineLatestWith, filter, forkJoin } from 'rxjs';
+import { UNindividual_ } from 'src/app/models/sanction-models/UNindividual_';
+import { UNentity_ } from 'src/app/models/sanction-models/UNentity_';
+import { EU_ } from 'src/app/models/sanction-models/EU_';
+import { UK_ } from 'src/app/models/sanction-models/UK_';
+import { OFAC_ } from 'src/app/models/sanction-models/OFAC_';
+
+
 
 @Component({
   selector: 'app-accordions',
-  templateUrl: './sanctionTable.component.html',
-  styleUrls: ['./sanctionTable.component.scss']
+  templateUrl: './sanctiontable.component.html',
+  styleUrls: ['./sanctiontable.component.scss']
 })
-export class SanctionTableComponent {
+export class SanctionTableComponent implements OnInit {
+//abdydidit
+  all_un_individual!: UNindividual_[];
+  all_un_entities!: UNentity_[];
+  all_eu_sanction!: EU_[];
+  all_uk_sanction!: UK_[];
+  all_nbe_sanction!: NbeBlackList[];
+  all_pep_sanction!: PepResponseDetail[];
+  all_adverser_sanction!: AdverserResponseDetail[];
+  all_ofac_sanction!: OFAC_[];
+//asro stands for all search results of
+  asro_all_un_individual: Array<UNindividual_>;
+  asro_all_un_entities!: Array<UNentity_>;
+  asro_all_eu_sanction!: Array<EU_>;
+  asro_all_uk_sanction!: Array<UK_>;
+  asro_all_nbe_sanction!: Array<NbeBlackList>;
+  asro_all_pep_sanction!: Array<PepResponseDetail>
+  asro_all_adverser_sanction!: Array<AdverserResponseDetail>;
+  asro_all_ofac_sanction!: Array<OFAC_>;
 
+ // for modal purpose 
+ displayDialog = false;
+selectedData: any;
 
+showDialog(data: any) {
+    this.selectedData = data;
+    this.displayDialog = true;
+}
+
+get selectedDataProperties() {
+  if (!this.selectedData) {
+      return [];
+  }
+  return Object.entries(this.selectedData).map(([property, value]) => ({ property, value }));
+}
+
+isObject(value: any) {
+  return typeof value === 'object' && value !== null;
+}
+//abdydiditends
 
   fullName: string = '';
   nameList: Name[];
@@ -31,19 +83,39 @@ export class SanctionTableComponent {
   detailRetrieved: boolean = false;
   responseDetail: ResponseDetail;
   nameAliasList!: NameAlias[];
-
   visible: boolean;
 
   constructor(private router: Router, public modalService: ModalService, private sanctionListService: SanctionListService,private primengConfig: PrimeNGConfig) { }
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-
+    this.sanctionListService.getAllUnIndividual().subscribe(data => {
+      this.all_un_individual = data; // assign the data returned by the API to a local variable
+    });
+    this.sanctionListService.getAllUnEntity().subscribe(data => {
+      this.all_un_entities = data; 
+    });
+    this.sanctionListService.getAllEu().subscribe(data => {
+      this.all_eu_sanction = data; 
+    });
+    this.sanctionListService.getAllUk().subscribe(data => {
+      this.all_uk_sanction = data; 
+    });
+    this.sanctionListService.getAllNbe().subscribe(data => {
+      this.all_nbe_sanction = data;
+    })
+    this.sanctionListService.getAllPep().subscribe(data => {
+      this.all_pep_sanction = data;
+    })
+    this.sanctionListService.getAllAdverser().subscribe(data => {
+      this.all_adverser_sanction = data;
+    })
+    this.sanctionListService.getAllOfac().subscribe(data => {
+      this.all_ofac_sanction = data;
+    })
   }
-  BasicShow: boolean = false;
 
-  showDialog() {
-      this.BasicShow = true;
-  }
+
+ 
 
   title = 'rms';
   public isLoggedIn() {
@@ -80,288 +152,61 @@ export class SanctionTableComponent {
   dataNbeChecker: number =-1;
   nbeBlackListList: NbeBlackList[];
   public getSearchResult(searchResult: string){
-combineLatestWith([
-  this.sanctionListService.getUNSanctionResult(searchResult).subscribe(data=>{
-    this.unSanctionList = data;
 
-    if (this.unSanctionList?.length > 0) {
-
-      this.dataUnSanctionChecker = 1;
-      this.sanctionData = [...Array(Object.keys(data).length).keys()]
-
-      console.log("Data UN List", this.unSanctionList[0].fullName);
-      console.log("UN Data Length: ", this.dataUnSanctionChecker)
-    } else {
-      this.dataUnSanctionChecker = 0;
-      console.log("Data From UN abdy Is Not Found");
+    function search(arrayOfObjects, typeofarray) {
+      if (!arrayOfObjects) {
+        console.log('Error: arrayOfObjects is undefined');
+        return [];
     }
-  }, (error:HttpErrorResponse) => {
-    if(error.status ===403){
-      this.unSanctionList = [];
-      this.dataUnSanctionChecker= -1;
-    }
-    this.unSanctionList = [];
-    this.dataUnSanctionChecker= -1;
-  }),
-  this.sanctionListService.getNbeBlackListSearchResult(searchResult).subscribe(data=>{
-    this.nbeBlackListList = data;
-    if (this.nbeBlackListList?.length > 0) {
-
-      this.dataNbeChecker = 1;
-      this.sanctionData = [...Array(Object.keys(data).length).keys()]
-      console.log("Data Nbe List", this.nbeBlackListList);
-      console.log("Nbe Data Length: ", this.dataNbeChecker)
-    } else {
-      this.dataNbeChecker = 0;
-      console.log("Data From Nbe Is Not Found");
-    }
-  }, (error:HttpErrorResponse) => {
-    if(error.status ===403){
-      this.nbeBlackListList = [];
-      this.dataNbeChecker= -1;
-    }
-    this.nbeBlackListList = [];
-    this.dataNbeChecker= -1;
-  }),
-  this.sanctionListService.getAdverserSearchResult(searchResult).subscribe(data=>{
-    this.adverserResponseDetailList = data;
-    if (this.adverserResponseDetailList?.length > 0) {
-
-      this.dataAdverserChecker = 1;
-      this.sanctionData = [...Array(Object.keys(data).length).keys()]
-      console.log("Data adverser List", this.adverserResponseDetailList[0].name);
-      console.log("Adverser Data Length: ", this.dataAdverserChecker)
-    } else {
-      this.dataAdverserChecker = 0;
-      console.log("Data From Adverser Is Not Found");
-    }
-  }, (error:HttpErrorResponse) => {
-    if(error.status===403){
-      this.adverserResponseDetailList = [];
-      this.dataAdverserChecker= -1;
-    }
-    this.adverserResponseDetailList = [];
-    this.dataAdverserChecker= -1;
-  }),
-  this.sanctionListService.getEUSearchResult(searchResult).subscribe(data=>{
-    this.nameAliasList = data;
-    if (this.nameAliasList?.length > 0) {
-
-      this.dataEuChecker = 1;
-      this.sanctionData = [...Array(Object.keys(data).length).keys()]
-      console.log("Data EU List", this.nameAliasList[0].wholeName);
-      console.log("EU Data Length: ", this.dataEuChecker)
-    } else {
-      this.dataEuChecker = 0;
-      console.log("Data From EU Is Not Found");
-    }
-  }, (error:HttpErrorResponse) => {
-    this.nameAliasList = [];
-    this.dataEuChecker= -1;
-  }),
-      //UK Sanction Service Call
-      this.sanctionListService.getUkSearchResult(searchResult).subscribe(data=>{
-        this.nameList = data;
-        if (this.nameList?.length > 0) {
-          this.dataUkChecker = 1;
-          this.sanctionData = [...Array(Object.keys(data[1]).length).keys()]
-          console.log("UK Data Length: ", this.dataUkChecker)
-          console.log("Data UK List", this.nameList);
-        } else {
-          this.dataUkChecker = 0;
-
-          console.log("Data From UK Is Not Found");
+      if (searchResult === '') {
+          return [];
+      }
+      return arrayOfObjects.filter(obj => {
+          let concatenatedNames;
+          if (typeofarray == 'all_un_individual') {
+              concatenatedNames = [obj.firstName, obj.secondName, obj.thirdName, obj.fourthName].map(name => (name || '').trim()).join(' ');
+          } else if (typeofarray == 'all_un_entities') {
+              concatenatedNames = [obj.firstName, obj.secondName, obj.thirdName].map(name => (name || '').trim()).join(' ');
+          } else if (typeofarray == 'all_eu_sanction') {
+            if (obj.nameAlias && obj.nameAlias.length > 0 && typeof obj.nameAlias[0].wholeName === 'string') {
+              concatenatedNames = obj.nameAlias[0].wholeName;
+          }  
+          }else if (typeofarray == 'all_uk_sanction') {
+            if (obj.names && obj.names.nameList && obj.names.nameList.length > 0) {
+                concatenatedNames = obj.names.nameList.map(name => [name.name1, name.name2, name.name3, name.name4, name.name5, name.name6].map(name => (name || '').trim()).join(' ')).join(' ');
+            } else {
+                console.log('Error: names or nameList property is missing or invalid');
+            }
+        } else if(typeofarray == 'all_nbe_sanction'){
+          concatenatedNames = obj.name;
+        }else if(typeofarray == 'all_pep_sanction'){
+          concatenatedNames = [obj.nameInEng, obj.nameInAmh].map(name => (name || '').trim()).join(' ');
+        } else if(typeofarray == 'all_adverser_sanction'){
+          concatenatedNames = obj.name;
+        } else if(typeofarray == 'all_ofac_sanction'){
+          concatenatedNames = obj.name;
         }
-      }, (error:HttpErrorResponse) => {
-        this.nameList = []
-        this.dataUkChecker =-1;
-      }
-      ),
-            // UNited Nation Individual Search
+          if(concatenatedNames != undefined){
+            return concatenatedNames.toLowerCase().includes(searchResult.toLowerCase());
+          }
+      
+      });
+  }
+  
+  this.asro_all_un_individual = search(this.all_un_individual, 'all_un_individual');
+  this.asro_all_un_entities = search(this.all_un_entities, 'all_un_entities');
+  this.asro_all_eu_sanction = search(this.all_eu_sanction,'all_eu_sanction');
+  this.asro_all_uk_sanction = search(this.all_uk_sanction, 'all_uk_sanction');
+  this.asro_all_nbe_sanction = search(this.all_nbe_sanction, "all_nbe_sanction");
+  this.asro_all_pep_sanction = search(this.all_pep_sanction, 'all_pep_sanction');
+  this.asro_all_adverser_sanction = search(this.all_adverser_sanction, 'all_adverser_sanction');
+  this.asro_all_ofac_sanction = search(this.all_ofac_sanction, 'all_ofac_sanction');
+  console.log(this.all_pep_sanction);
 
-            this.sanctionListService.getUNIndividualSearchResult(searchResult).subscribe(data=>{
+ 
 
-              this.unIndividualResponseDetailList = data;
-
-              if (this.unIndividualResponseDetailList?.length > 0) {
-                this.dataUnIndividualChecker = 1;
-                console.log("UN Individual Data Length: ", this.dataUnIndividualChecker)
-                console.log("Data UN Individual List", this.unIndividualResponseDetailList);
-              } else {
-                this.dataUnIndividualChecker = 0;
-
-                console.log("Data From UN Is Not Found");
-              }
-            },
-            (error:HttpErrorResponse) => {
-              if (error.status===403) {
-                this.unIndividualResponseDetailList = [];
-              this.dataUnIndividualChecker=-1;
-              }
-              this.unIndividualResponseDetailList = [];
-              this.dataUnIndividualChecker=-1;
-             }, ()=>{
-      console.log("United Nation: Done");
-
-             }),
-      //Politically Exposed People
-      this.sanctionListService.getPEPSearchResult(searchResult).subscribe(data=>{
-        this.pepResponseDetailList = data;
-        if (this.pepResponseDetailList?.length >0) {
-          this.dataPepChecker = 1;
-          console.log("PEP Data Length: ", this.dataPepChecker)
-          console.log("Data PEP List", this.pepResponseDetailList);
-        } else {
-          this.dataPepChecker = 0;
-
-          console.log("Data From PEP Is Not Found");
         }
-      }, (error:HttpErrorResponse) => {
-        this.pepResponseDetailList = [];
-        this.dataPepChecker = -1;
-      })
-])
-  }
-  public getAllSearchResult(searchResult: string) {
-
-    combineLatest(
-      [
-        //EU Sanction Service Call
-        this.sanctionListService.getEUSearchResult(searchResult),
-        //UK Sanction Service Call
-        this.sanctionListService.getUkSearchResult(searchResult),
-        //Politically Exposed People
-        this.sanctionListService.getPEPSearchResult(searchResult),
-        this.sanctionListService.getUNIndividualSearchResult(searchResult)
-
-
-      ]
-    ).subscribe((data: [NameAlias[], Name[], PepResponseDetail[], UnIndividualResponseDetail[]]) => {
-      this.nameAliasList = data[0];
-      this.nameList = data[1];
-      this.pepResponseDetailList = data[2];
-      this.unIndividualResponseDetailList = data[3];
-
-      if (this.unIndividualResponseDetailList?.length > 0) {
-        this.dataUnIndividualChecker = 1;
-        console.log("UN Individual Data Length: ", this.dataUnIndividualChecker)
-        console.log("Data UN Individual List", this.unIndividualResponseDetailList);
-      } else {
-        this.dataUnIndividualChecker = 0;
-
-        console.log("Data From UN Is Not Found");
-      }
-      if (this.pepResponseDetailList?.length >0) {
-        this.dataPepChecker = 1;
-        console.log("PEP Data Length: ", this.dataPepChecker)
-        console.log("Data PEP List", this.pepResponseDetailList);
-      } else {
-        this.dataPepChecker = 0;
-
-        console.log("Data From PEP Is Not Found");
-      }
-      if (this.nameAliasList?.length > 0) {
-
-        this.dataEuChecker = 1;
-        this.sanctionData = [...Array(Object.keys(data).length).keys()]
-        console.log("Data EU List", this.nameAliasList[0].wholeName);
-        console.log("EU Data Length: ", this.dataEuChecker)
-      } else {
-        this.dataEuChecker = 0;
-        console.log("Data From EU Is Not Found");
-      }
-
-      if (this.nameList?.length > 0) {
-        this.dataUkChecker = 1;
-        this.sanctionData = [...Array(Object.keys(data[1]).length).keys()]
-        console.log("UK Data Length: ", this.dataUkChecker)
-        console.log("Data UK List", this.nameList);
-      } else {
-        this.dataUkChecker = 0;
-
-        console.log("Data From UK Is Not Found");
-      }
-
-      console.log("NameAlias: ", this.nameAliasList);
-      console.log("Name: ", this.nameList);
-      console.log("PepResponseList: ", this.pepResponseDetailList);
-      console.log("UNIndividual: ", this.unIndividualResponseDetailList)
-
-    })
-
-  }
-
-  public getCustomerEuDetail(Id: any) {
-
-    this.detailRetrieved = true;
-    this.visible = true;
-    console.log("Id from Arg: ", Id)
-    this.sanctionListService.userEUDetail(Id).subscribe(data => {
-      this.dataModelList = data;
-      console.log("Data: ", data);
-    });
-  }
-  public getCustomerUkDetail(Id: any) {
-    console.log("Id In CustomerDetail: ", Id);
-
-    console.log("Id from Arg: ", Id as string)
-    this.sanctionListService.userUkDetail(Id).subscribe(data => {
-
-      console.log("Names IN Details: ", data.names)
-      console.log("Id from Arg After call: ", Id)
-      this.responseDetail = data;
-      this.names = this.responseDetail.names;
-      this.detailRetrieved = true;
-      console.log("ResponseDetail.Names: ", data.names)
-
-
-      console.log("Data: ", data);
-    });
-  }
-  public getPepCustomerDetail(Id: any) {
-    console.log("Id In CustomerDetail: ", Id);
-
-    console.log("Id from Arg: ", Id as string)
-    this.sanctionListService.userPEPDetail(Id).subscribe(data => {
-      this.pepResponseDetails = data;
-      console.log("PEP IN Details: ", this.pepResponseDetails)
-      console.log("Id from Arg After call: ", Id)
-      this.detailRetrieved = true;
-      console.log("PepResponseDetail: ", this.pepResponseDetails)
-      console.log("Data: ", data);
-    });
-  }
-  public getUnIndividualCustomerDetail(Id: any){
-    console.log("Id in UN CustomerDetail: ", Id);
-
-    console.log("Id from Arg: ", Id as string)
-    this.sanctionListService.userUnIndividualDetail(Id).subscribe(data => {
-      this.unIndividualResponses = data;
-      console.log("UN Individual IN Details: ", this.unIndividualResponses)
-      console.log("Id from Arg After call: ", Id)
-      this.detailRetrieved = true;
-      console.log(": ", this.unIndividualResponses)
-      console.log("Data: ", data);
-    });
-  }
-
-  public getUnSanction(Id: any){
-    console.log("Id in UN CustomerDetail: ", Id);
-
-    console.log("Id from Arg: ", Id as string)
-    this.sanctionListService.unSanctionDetail(Id).subscribe(data => {
-      this.unSanctionList = data;
-
-      console.log("UN Individual IN Details: ", this.unSanction)
-      console.log("Id from Arg After call: ", Id)
-      this.detailRetrieved = true;
-      console.log(": ", this.unSanction)
-      console.log("Data: ", data);
-    });
-  }
-
-
-
+  
 }
 
 

@@ -8,8 +8,8 @@ import { BranchService } from '../../../../services/branch.service';
 
 @Component({
   selector: 'app-accordions',
-  templateUrl: './BranchTable.component.html',
-  styleUrls: ['./BranchTable.component.scss']
+  templateUrl: './branchtable.component.html',
+  styleUrls: ['./branchtable.component.scss']
 })
 export class BranchTableComponent {
   public branches: Branch[] = [];
