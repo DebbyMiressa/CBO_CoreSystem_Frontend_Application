@@ -9,8 +9,8 @@ import { ToastModule } from 'primeng/toast';
 
 
 import { FormModule } from '@coreui/angular';
-import { NewBranchComponent } from './newBranch/newBranch.component';
-import { BranchTableComponent } from './branchTable/branchTable.component';
+import { NewBranchComponent } from './newbranch/newbranch.component';
+import { BranchTableComponent } from './branchtable/branchtable.component';
 import { BranchRoutingModule } from './branch-routing.module';
 import { IconModule } from '@coreui/icons-angular';
 

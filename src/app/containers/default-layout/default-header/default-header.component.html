@@ -12,6 +12,7 @@
         size="lg"
       ></svg>
     </button>
+
     <c-header-nav class="d-none d-lg-flex me-auto">
       <c-nav-item>
         <a cNavLink routerLink="/dashboard" routerLinkActive="active">
@@ -20,6 +21,7 @@
       </c-nav-item>
     </c-header-nav>
     <c-header-nav class="ms-3">
+      <ng-container *ngTemplateOutlet="userManual"></ng-container>
       <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
     </c-header-nav>
 
@@ -29,6 +31,7 @@
     <c-breadcrumb-router class="ms-2"></c-breadcrumb-router>
   </c-container>
 </ng-container>
+
 
 
 <ng-template #userDropdown >
@@ -46,8 +49,33 @@
     <ul cDropdownMenu class="pt-0 pr-4 w-auto">
       <li>
         <a type="submit" cDropdownItem value="Logout" (click)="logout()">Logout</a>
-    </li>
+      </li>
     </ul>
   </c-dropdown>
 </ng-template>
+
+<ng-template #userManual >
+
+  <button pButton 
+  type="button" 
+  icon="pi pi-book" 
+  label="User Manuals"
+  styleClass="p-button-secondary"
+  [style]="{'margin-right': '10px', 'padding':'10px'}"
+  (click)="openDialog({position: {top: '10px'}})"
+  >
+</button>
+
+<p-dialog header="User Manuals" [(visible)]="display" [style]="{width: '80vw', top:'30px', left:'9%', height:'80vh', overflow:'scroll'}">
+
+   <p-accordion>
+      <p-accordionTab *ngFor="let module of modules" [header]="module.name"  >
+          {{module.name}}
+      </p-accordionTab>
+  </p-accordion> 
+</p-dialog>
+</ng-template>
+
+
+
 

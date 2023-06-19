@@ -5,7 +5,7 @@ import { ButtonModule, CardModule, GridModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../../icons/icon-subset';
-import { NewEmployeeComponent } from './newEmployee.component';
+import { NewEmployeeComponent } from './newemployee.component';
 
 describe('NewEmployeeComponent', () => {
   let component: NewEmployeeComponent;

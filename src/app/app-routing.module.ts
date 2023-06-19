@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { DefaultLayoutComponent } from './containers';
 import { LoginComponent } from './login/login.component';
 import { NewDivisonComponent } from './modules/cas/division/newDivision/newDivision.component';
-import { NewEmployeeComponent } from './modules/cas/employee/newEmployee/newEmployee.component';
-import { NewUserComponent } from './modules/cas/user/newUser/newUser.component';
+import { NewEmployeeComponent } from './modules/cas/employee/newemployee/newemployee.component';
+import { NewUserComponent } from './modules/cas/user/newuser/newuser.component';
 import { AuthGuard} from './_guards/auth.guard';
-import { NewBranchComponent } from './modules/cas/branch/newBranch/newBranch.component';
+import { NewBranchComponent } from './modules/cas/branch/newbranch/newbranch.component';
 import { NewDistrictComponent } from './modules/cas/district/newDistrict/newDistrict.component';
 import { NewCIPMComponent } from './modules/ic/cipm/newCIPM/newCIPM.component';
 import { NewDchequeComponent } from './modules/ic/dcheque/newDcheque/newDcheque.component';
@@ -41,7 +41,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: DefaultLayoutComponent, canActivate: [AuthGuard],
+    component: DefaultLayoutComponent,canActivate: [AuthGuard],
     data: {title: 'Home'},
 
     children: [
@@ -57,7 +57,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: DefaultLayoutComponent, canActivate: [AuthGuard],
+    component: DefaultLayoutComponent,canActivate: [AuthGuard],
     data: {title: 'Home'},
 
     children: [

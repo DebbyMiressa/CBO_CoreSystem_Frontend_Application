@@ -17,7 +17,7 @@ interface LoginResponse {
 export class AuthService {
 
   // API path
-  basePath = 'http://10.1.11.44:8083';
+  basePath = 'http://10.1.125.58:8082';
 
   constructor(
     private router: Router,
@@ -70,12 +70,17 @@ export class AuthService {
         role =="ROLE_BRANCH_MANAGER" ||
         role =="ROLE_DISTRICT_IC"
         ) {
-
-      this.router.navigate(['/dashboard']);
+       if(   role =="ROLE_SANCTION_VIEW" ){
+        this.router.navigate(['Sanction/viewSanction']);
+       }else{
+        this.router.navigate(['dashboard']);
+       }
+     
     }
 
     localStorage.clear();
     localStorage.setItem('email', resp?.user?.employee?.email);
+    localStorage.setItem('role',  resp?.user?.roles[0]?.name);
     localStorage.setItem('access_token', resp?.accessToken);
     for (let i = 0; i < resp?.user?.roles.length; i++) {
       localStorage.setItem('role_' + i, resp?.user?.roles[i]?.name);
@@ -85,11 +90,13 @@ export class AuthService {
     for (let i = 0; i < resp?.user?.modules.length; i++) {
       localStorage.setItem('module_' + i, resp?.user?.modules[i].status.toString());
     }
+    localStorage.setItem('allModules',JSON.stringify(resp?.user?.modules));
+
     for (let i = 1; i <= resp?.user.modules.length + 1; i++) {
       if (i == 1) {
         localStorage.setItem('url_1', this.basePath);
       } else {
-        localStorage.setItem('url_' + (i), resp?.user?.modules[i-2].url);
+        localStorage.setItem('url_' + (resp?.user?.modules[i-2].id), resp?.user?.modules[i-2].url);
       }
     }
 

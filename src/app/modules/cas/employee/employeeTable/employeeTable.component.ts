@@ -7,8 +7,8 @@ import { ConfirmationService, Message, MessageService, PrimeNGConfig } from 'pri
 
 @Component({
   selector: 'app-accordions',
-  templateUrl: './EmployeeTable.component.html',
-  styleUrls: ['./EmployeeTable.component.scss']
+  templateUrl: './employeetable.component.html',
+  styleUrls: ['./employeetable.component.scss']
 })
 export class EmployeeTableComponent {
 

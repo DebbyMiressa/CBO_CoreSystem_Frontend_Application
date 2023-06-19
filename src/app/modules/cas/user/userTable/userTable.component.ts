@@ -8,8 +8,8 @@ import { UserService } from '../../../../services/user.service';
 
 @Component({
   selector: 'app-accordions',
-  templateUrl: './UserTable.component.html',
-  styleUrls: ['./UserTable.component.scss']
+  templateUrl: './usertable.component.html',
+  styleUrls: ['./usertable.component.scss']
 })
 export class UserTableComponent {
   public users: User[] = [];

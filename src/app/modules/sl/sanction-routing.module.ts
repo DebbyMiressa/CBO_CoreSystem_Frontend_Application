@@ -1,25 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SanctionTableComponent } from './SanctionTable/SanctionTable.component';
+import { SanctionTableComponent } from './sanctiontable/sanctiontable.component';
 
 
 const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Sanction List',
+      title: 'Search',
     },
     children: [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'View Sanction List',
+        redirectTo: 'View ',
       },
       {
         path: 'viewSanction',
         component: SanctionTableComponent,
         data: {
-          title: 'View Sanction List',
+          title: 'View',
         },
       },
     ],

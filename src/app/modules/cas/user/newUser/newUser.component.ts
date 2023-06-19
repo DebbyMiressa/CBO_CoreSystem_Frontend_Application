@@ -18,8 +18,8 @@ import { RoleService } from 'src/app/services/role.service';
 
 @Component({
   selector: 'app-accordions',
-  templateUrl: './newUser.component.html',
-  styleUrls: ['./newUser.component.scss']
+  templateUrl: './newuser.component.html',
+  styleUrls: ['./newuser.component.scss']
 })
 
 export class NewUserComponent implements OnInit{

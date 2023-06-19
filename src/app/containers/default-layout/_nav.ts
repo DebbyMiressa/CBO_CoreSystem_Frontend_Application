@@ -273,103 +273,6 @@ navItemsBM = {
   ]
 }
 
-navItemsSASVAdmin = {
-  name: 'Signature & Stamp',
-  url: '/SASV',
-  children: [
-    {
-      name: 'Home',
-      title: true
-    },
-    {
-      name: 'Dashboard',
-      url: '/SASV/dashboard',
-      iconComponent: { name: 'cil-chart' },
-    },
-    {
-      name: 'Menu',
-      title: true
-    },
-    {
-      name: 'User',
-      url: '/SASV/user',
-      iconComponent: { name: 'cil-user' },
-      children: [
-        {
-          name: 'New',
-          url: '/SASV/user/newUser',
-        },
-        {
-          name: 'Table',
-          url: '/SASV/user/userTable',
-        },
-      ]
-    },
-    {
-
-      name: 'Employees',
-      url: '/SASV/employee',
-      iconComponent: { name: 'cil-people' },
-      children: [
-        {
-          name: 'New',
-          url: '/SASV/employee/newEmployee',
-        },
-        {
-          name: 'Table',
-          url: '/SASV/employee/employeeTable',
-        },
-      ]
-    },
-    {
-      name: 'Division',
-      url: '/SASV/division',
-      iconComponent: { name: 'cil-sitemap' },
-      children: [
-        {
-          name: 'New',
-          url: '/SASV/division/newDivison',
-        },
-        {
-          name: 'Table',
-          url: '/SASV/division/divisionTable',
-        },
-
-      ]
-    },
-    {
-      name: 'Authority',
-      url: '/SASV/authority',
-      iconComponent: { name: 'cil-institution' },
-      children: [
-        {
-          name: 'New',
-          url: '/SASV/authority/newAuthority'
-        },
-        {
-          name: 'Table',
-          url: '/SASV/authority/authorityTable'
-        },
-      ]
-    },
-    {
-      name: 'Director',
-      url: '/SASV/director',
-      iconComponent: { name: 'cil-notes' },
-    },
-  ]
-}
-
-navItemsSASVView = {
-  name: 'Sanction List',
-  url: '/',
-  children: [
-    {
-      name: 'Home',
-      title: true
-    },
-  ]
-}
 
 navItemsSanctionAdmin = {
   name: 'Sanction List',
@@ -383,6 +286,7 @@ navItemsSanctionAdmin = {
 }
 
 navItemsSanctionView = {
-  name: 'View',
-  url: '/Sanction/viewSanction'
+  name: 'Search',
+  url: '/Sanction/viewSanction',
+
 }

@@ -11,8 +11,8 @@ import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-buttons',
-  templateUrl: './newEmployee.component.html',
-  styleUrls: ['./newEmployee.component.scss'],
+  templateUrl: './newemployee.component.html',
+  styleUrls: ['./newemployee.component.scss'],
   providers: [MessageService, DatePipe]
 })
 

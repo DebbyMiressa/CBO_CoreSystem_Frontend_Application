@@ -13,7 +13,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CalendarModule } from 'primeng/calendar';
 import { ChipsModule } from 'primeng/chips';
 import { DropdownModule as Drop}  from 'primeng/dropdown';
-
+import { DialogModule } from 'primeng/dialog';
+import { AccordionModule } from "primeng/accordion";
 import {
   PERFECT_SCROLLBAR_CONFIG,
   PerfectScrollbarConfigInterface,
@@ -81,6 +82,7 @@ const APP_CONTAINERS = [
     Drop,
     GridModule,
     HeaderModule,
+    DialogModule,
     SidebarModule,
     IconModule,
     PerfectScrollbarModule,
@@ -104,7 +106,8 @@ const APP_CONTAINERS = [
     SplitButtonModule,
     CalendarModule,
     ChipsModule,
-    InputTextModule
+    InputTextModule,
+    AccordionModule
   ],
   providers: [
     {

@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AccordionModule, CardModule, GridModule } from '@coreui/angular';
 import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
-import { SanctionTableComponent } from './SanctionTable.component';
+import { SanctionTableComponent } from './sanctiontable.component';
 
 describe('SanctionTableComponent', () => {
   let component: SanctionTableComponent;

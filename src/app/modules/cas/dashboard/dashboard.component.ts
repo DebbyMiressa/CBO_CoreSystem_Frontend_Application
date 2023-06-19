@@ -70,6 +70,7 @@ export class DashboardComponent implements OnInit {
     console.log("url_1 = "+localStorage.getItem('url_1'))
     console.log("url_2 = "+localStorage.getItem('url_2'))
     console.log("url_3 = "+localStorage.getItem('url_3'))
+    console.log("url_4 = " + localStorage.getItem('url_4'))
     console.log("role_0 = "+localStorage.getItem('role_0'))
     console.log("role_1 = "+localStorage.getItem('role_1'))
     console.log("name = "+localStorage.getItem('name'))

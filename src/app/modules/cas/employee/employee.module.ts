@@ -33,8 +33,8 @@ import {
 } from '@coreui/angular';
 
 import { IconModule } from '@coreui/icons-angular';
-import { NewEmployeeComponent } from './newEmployee/newEmployee.component';
-import { EmployeeTableComponent } from './employeeTable/employeeTable.component';
+import { NewEmployeeComponent } from './newemployee/newemployee.component';
+import { EmployeeTableComponent } from './employeetable/employeetable.component';
 
 @NgModule({
   declarations: [
