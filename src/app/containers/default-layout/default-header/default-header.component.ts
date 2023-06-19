@@ -17,7 +17,24 @@ export class DefaultHeaderComponent extends HeaderComponent {
   public newTasks = new Array(5)
   public newNotifications = new Array(5)
 
+//abdydidit
+//this is our role localStorage.getItem('role');
+
+
+
+// for modal purpose 
+display: boolean = false;
+  modules = JSON.parse(localStorage.getItem("allModules"));
+
+public openDialog(config: any){
+this.display = true;
+
+}
+
+//abdydiditends
+
   constructor(private classToggler: ClassToggleService, private router: Router) {
+  
     super();
   }
   ngOnInit(){

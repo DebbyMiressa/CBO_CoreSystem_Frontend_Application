@@ -84,6 +84,7 @@ isObject(value: any) {
   responseDetail: ResponseDetail;
   nameAliasList!: NameAlias[];
   visible: boolean;
+  
 
   constructor(private router: Router, public modalService: ModalService, private sanctionListService: SanctionListService,private primengConfig: PrimeNGConfig) { }
   ngOnInit(): void {
@@ -112,7 +113,9 @@ isObject(value: any) {
     this.sanctionListService.getAllOfac().subscribe(data => {
       this.all_ofac_sanction = data;
     })
+ 
   }
+
 
 
  
@@ -151,6 +154,11 @@ isObject(value: any) {
   adverserResponses: AdverserResponseDetail[];
   dataNbeChecker: number =-1;
   nbeBlackListList: NbeBlackList[];
+
+  //abdydiditstarts
+
+
+
   public getSearchResult(searchResult: string){
 
     function search(arrayOfObjects, typeofarray) {
@@ -206,6 +214,7 @@ isObject(value: any) {
  
 
         }
+        //abdydiditends
   
 }
 

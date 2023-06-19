@@ -7,19 +7,19 @@ const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Sanction List',
+      title: 'Search',
     },
     children: [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'View Sanction List',
+        redirectTo: 'View ',
       },
       {
         path: 'viewSanction',
         component: SanctionTableComponent,
         data: {
-          title: 'View Sanction List',
+          title: 'View',
         },
       },
     ],
